@@ -1,27 +1,42 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet} from 'react-native'
-import { ScreenOrientation } from 'expo'
+import { View, StyleSheet } from 'react-native'
+import GameCard from '../components/GameCard'
+import FinalScreen from '../components/FinalScreen'
 
 export default class GameScreen extends Component {
-    componentDidMount = () => {
-        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
+    state = {
+        remainingTime: 60,
+        timer: null 
     }
 
-    componentWillUnMount = () => {
-        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.Default)
-        //we want to unlock the orientation of the app in unmount and send props to final screen stop timer
+    startTimer = () => {
+        this.setState({ timer: setInterval( this.decrementTimer, 1000 ) })
     }
 
+    decrementTimer = () => {
+        this.setState({ remainingTime: this.state.remainingTime - 1 })
+    }
+
+    clearTimer = () => {
+        clearInterval(this.state.timer)
+    }
     render() {
-        const { container, cardContainer, answerText, timer } = styles
-
-        return ( 
-            <View style={container}>
-                    <View style={cardContainer}>
-                        <Text style={answerText}>Closure</Text>
-                        <Text style={timer}>0:82</Text>
-                    </View>
-            </View >
+        const { remainingTime } = this.state
+        const { startTimer, decrementTimer, clearTimer } = this
+        return (
+            <View style={styles.container}>
+                {
+                    remainingTime > 0 
+                        ? <GameCard 
+                            style={styles.container}
+                            remainingTime={remainingTime}
+                            startTimer={startTimer}
+                            decrementTimer={decrementTimer}
+                            clearTimer={clearTimer}
+                        />
+                        : <FinalScreen />
+                }
+            </View>
         )
     }
 }
@@ -40,31 +55,7 @@ const { green, lightGreen, yellow, orange, red, white  } = color
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingLeft: 60,
-        paddingRight: 40,
         backgroundColor: '#000',
     },
-
-    cardContainer: {
-        flex: 1,
-        borderRadius: 50,
-        borderWidth: 15,
-        borderColor: '#FFF',
-        backgroundColor: red,
-        overflow: 'hidden',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    
-    answerText: {
-        fontSize: 120,
-        fontWeight: 'bold',
-        color: white,
-    },
-
-    timer: {
-        fontSize: 50,
-        color: white,
-    }
 })
 
