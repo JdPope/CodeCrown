@@ -6,7 +6,14 @@ import FinalScreen from '../components/FinalScreen'
 export default class GameScreen extends Component {
     state = {
         remainingTime: 60,
-        timer: null 
+        timer: null,
+        cardIndex: 0,
+        cards: [
+            {id: 1, question: '--api', answer: 'Makes a Rails API', difficulty: 4, category_id: 2 },
+            {id: 2, question: 'Closure', answer: 'It closes things', difficulty: 2, category_id: 2 },
+            {id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
+            {id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
+        ],
     }
 
     startTimer = () => {
@@ -20,9 +27,28 @@ export default class GameScreen extends Component {
     clearTimer = () => {
         clearInterval(this.state.timer)
     }
+
+    // randomizeCards = () => {
+
+    // }
+
+    currentCard = () => {
+        const { cards, cardIndex } = this.state
+        return cards[cardIndex]
+    }
+
+    nextCard = () => {
+        const { cards, cardIndex } = this.state
+        if(cardIndex < ( cards.length - 1 )){
+            this.setState({cardIndex: cardIndex + 1})
+        } else {
+            this.setState({remainingTime: 1})
+        }
+    }
+
     render() {
-        const { remainingTime } = this.state
-        const { startTimer, decrementTimer, clearTimer } = this
+        const { remainingTime, cards } = this.state
+        const { startTimer, decrementTimer, clearTimer, currentCard, nextCard } = this
         return (
             <View style={styles.container}>
                 {
@@ -33,6 +59,8 @@ export default class GameScreen extends Component {
                             startTimer={startTimer}
                             decrementTimer={decrementTimer}
                             clearTimer={clearTimer}
+                            card={currentCard()}
+                            nextCard={nextCard}
                         />
                         : <FinalScreen />
                 }

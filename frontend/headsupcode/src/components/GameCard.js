@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { ScreenOrientation } from 'expo'
 import Timer from './Timer'
 
@@ -16,14 +16,19 @@ export default class GameCard extends Component {
         //we want to unlock the orientation of the app in unmount and send props to final screen stop timer maybe on next screen
     }
 
+    onPress = () => {
+        this.props.nextCard()
+    }
+
     render() {
         const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime } = this.props
+        const { remainingTime, card } = this.props
 
         return ( 
             <View style={cardContainer}>
-                <Text style={answerText}>Closure</Text>
+                <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
+                <Button onPress={this.onPress} title='Next' />
             </View>
         )
     }

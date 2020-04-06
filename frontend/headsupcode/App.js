@@ -7,7 +7,7 @@ const navigator = createStackNavigator({
     Home: HomeScreen,
     Game: GameScreen,
 },{
-    initialRouteName: 'Home',
+    initialRouteName: 'Game',
     defaultNavigationOptions: {
         headerShown: false,
     }
