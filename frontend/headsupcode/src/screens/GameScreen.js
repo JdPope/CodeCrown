@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { Gyroscope } from 'expo-sensors'
 import GameCard from '../components/GameCard'
 import FinalScreen from '../components/FinalScreen'
 
@@ -14,6 +15,11 @@ export default class GameScreen extends Component {
             {id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
             {id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
         ],
+        gyroscopeActive: true,
+    }
+
+    componentDidMount = () => {
+        this.checkGyroscope()
     }
 
     startTimer = () => {
@@ -46,8 +52,14 @@ export default class GameScreen extends Component {
         }
     }
 
+    checkGyroscope = async () => {
+        await Gyroscope.isAvailableAsync() 
+            ? this.setState({gyroscopeActive: true}) 
+            : this.setState({gyroscopeActive: false})
+    }
+
     render() {
-        const { remainingTime, cards } = this.state
+        const { remainingTime, cards, gyroscopeActive } = this.state
         const { startTimer, decrementTimer, clearTimer, currentCard, nextCard } = this
         return (
             <View style={styles.container}>
@@ -61,6 +73,7 @@ export default class GameScreen extends Component {
                             clearTimer={clearTimer}
                             card={currentCard()}
                             nextCard={nextCard}
+                            gyroscopeActive={gyroscopeActive}
                         />
                         : <FinalScreen />
                 }

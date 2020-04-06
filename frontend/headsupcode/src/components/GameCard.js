@@ -22,13 +22,17 @@ export default class GameCard extends Component {
 
     render() {
         const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime, card } = this.props
+        const { remainingTime, card, gyroscopeActive } = this.props
 
         return ( 
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
-                <Button onPress={this.onPress} title='Next' />
+                {
+                gyroscopeActive 
+                    ? null
+                    : <Button onPress={this.onPress} title='Next' />
+                }
             </View>
         )
     }
