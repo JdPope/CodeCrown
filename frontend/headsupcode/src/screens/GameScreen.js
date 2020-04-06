@@ -42,7 +42,7 @@ export default class GameScreen extends Component {
         if(cardIndex < ( cards.length - 1 )){
             this.setState({cardIndex: cardIndex + 1})
         } else {
-            this.setState({remainingTime: 1})
+            this.setState({remainingTime: 0})
         }
     }
 
@@ -52,7 +52,7 @@ export default class GameScreen extends Component {
         return (
             <View style={styles.container}>
                 {
-                    remainingTime > 0 
+                    remainingTime > -1
                         ? <GameCard 
                             style={styles.container}
                             remainingTime={remainingTime}
