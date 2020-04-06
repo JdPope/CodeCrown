@@ -5,7 +5,7 @@ import { ScreenOrientation } from 'expo'
 export default class FinalScreen extends Component {
 
     componentDidMount = () => {
-        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT)
+        ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT_UP)
     }
 
     render() {
