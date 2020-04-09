@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Gyroscope } from 'expo-sensors'
+import { DeviceMotion } from 'expo-sensors'
 import GameCard from '../components/GameCard'
 import FinalScreen from '../components/FinalScreen'
 
@@ -15,11 +15,11 @@ export default class GameScreen extends Component {
             {id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
             {id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
         ],
-        gyroscopeActive: true,
+        deviceMotionActive: true,
     }
 
     componentDidMount = () => {
-        this.checkGyroscope()
+        this.checkDeviceMotion()
     }
 
     startTimer = () => {
@@ -52,14 +52,14 @@ export default class GameScreen extends Component {
         }
     }
 
-    checkGyroscope = async () => {
-        await Gyroscope.isAvailableAsync() 
-            ? this.setState({gyroscopeActive: true}) 
-            : this.setState({gyroscopeActive: false})
+    checkDeviceMotion = async () => {
+        await DeviceMotion.isAvailableAsync() 
+            ? this.setState({deviceMotionActive: true}) 
+            : this.setState({deviceMotionActive: false})
     }
 
     render() {
-        const { remainingTime, cards, gyroscopeActive } = this.state
+        const { remainingTime, cards, deviceMotionActive } = this.state
         const { startTimer, decrementTimer, clearTimer, currentCard, nextCard } = this
         return (
             <View style={styles.container}>
@@ -73,7 +73,7 @@ export default class GameScreen extends Component {
                             clearTimer={clearTimer}
                             card={currentCard()}
                             nextCard={nextCard}
-                            gyroscopeActive={gyroscopeActive}
+                            deviceMotionActive={deviceMotionActive}
                         />
                         : <FinalScreen />
                 }

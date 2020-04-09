@@ -1,12 +1,22 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { ScreenOrientation } from 'expo'
+import { DeviceMotion } from 'expo-sensors'
 import Timer from './Timer'
 
 export default class GameCard extends Component {
 
+    state = {
+        data: {},
+
+    }
+
     componentDidMount = () => {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
+        DeviceMotion.addListener(data => {
+            this.setState({ data })
+        })
+        DeviceMotion.setUpdateInterval(5000)
         this.props.startTimer()
     }
 
@@ -22,14 +32,15 @@ export default class GameCard extends Component {
 
     render() {
         const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime, card, gyroscopeActive } = this.props
+        const { remainingTime, card, deviceMotionActive } = this.props
+        console.log(this.state.data)
 
         return ( 
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
                 {
-                gyroscopeActive 
+                deviceMotionActive 
                     ? null
                     : <Button onPress={this.onPress} title='Next' />
                 }
