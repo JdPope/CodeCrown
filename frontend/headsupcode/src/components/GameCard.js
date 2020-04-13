@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button } from 'react-native'
 import { ScreenOrientation } from 'expo'
 import { DeviceMotion } from 'expo-sensors'
 import Timer from './Timer'
+import Flip from './Flip'
 
 export default class GameCard extends Component {
 
@@ -13,10 +14,6 @@ export default class GameCard extends Component {
 
     componentDidMount = () => {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
-        DeviceMotion.addListener(data => {
-            this.setState({ data })
-        })
-        DeviceMotion.setUpdateInterval(5000)
         this.props.startTimer()
     }
 
@@ -26,26 +23,58 @@ export default class GameCard extends Component {
         //we want to unlock the orientation of the app in unmount and send props to final screen stop timer maybe on next screen
     }
 
+    startDeviceMotionListener = () => {
+        DeviceMotion.addListener(data => {
+            this.setState({ data })
+        })
+        DeviceMotion.setUpdateInterval(5000)
+        return null
+    }
+
     onPress = () => {
         this.props.nextCard()
     }
 
-    render() {
-        const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime, card, deviceMotionActive } = this.props
-        console.log(this.state.data)
+    checkForRotation = () => {
+        const { rotation } = this.state.data
+        if(rotation){
+            return rotation.gamma < 2.3 && rotation.gamma > 0.9
+        }
+    }
 
-        return ( 
+    nonDeviceMotionRender = () => {
+        const { container, cardContainer, answerText, timer } = styles
+        const { remainingTime, card } = this.props
+        return(
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
-                {
-                deviceMotionActive 
-                    ? null
-                    : <Button onPress={this.onPress} title='Next' />
-                }
+                <Button onPress={this.onPress} title='Next'/>
             </View>
         )
+    }
+
+    deviceMotionRender = () => {
+        const { container, cardContainer, answerText, timer } = styles
+        const { remainingTime, card } = this.props
+        return(
+            <View style={cardContainer}>
+                <Text style={answerText}>{card.question}</Text>
+                <Timer timer={remainingTime} />
+            </View>
+        )
+    }
+
+    checkDeviceMotion = () => {
+        return this.props.deviceMotionActive 
+            ? this.deviceMotionRender()
+            : this.nonDeviceMotionRender()
+    }
+
+
+
+    render() {
+       return this.checkDeviceMotion()
     }
 }
 
