@@ -9,37 +9,80 @@ export default class GameCard extends Component {
 
     state = {
         data: {},
-
+        deviceMotionActive: false,
+        isFlipped: false,
+        isCorrect: null,
     }
 
     componentDidMount = () => {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
         this.props.startTimer()
+        this.checkForDeviceMotion()
     }
 
     componentWillUnMount = () => {
         this.props.clearTimer()
-        // ScreenOrientation.lockAsync(ScreenOrientation.Orientation.Default)
-        //we want to unlock the orientation of the app in unmount and send props to final screen stop timer maybe on next screen
+    }
+
+    checkForDeviceMotion = async () => {
+        const isDeviceMotionAvailable = await DeviceMotion.isAvailableAsync() 
+        if(isDeviceMotionAvailable) {
+            this.setState({deviceMotionActive: true})
+            this.startDeviceMotionListener()
+        } 
     }
 
     startDeviceMotionListener = () => {
         DeviceMotion.addListener(data => {
             this.setState({ data })
+            DeviceMotion.setUpdateInterval(100)
+            !this.state.isFlipped ? this.checkForRotation() : null
         })
-        DeviceMotion.setUpdateInterval(5000)
-        return null
+    }
+
+    checkForRotation = () => {
+        const { rotation } = this.state.data
+
+        if(rotation){
+            if(rotation.gamma > 2.3){
+                this.setState({
+                    isFlipped: true,
+                    isCorrect: true,
+                })
+            } else if (rotation.gamma < 1.3){
+                this.setState({
+                    isFlipped: true,
+                    isCorrect: false,
+                })
+            } 
+        }
+    }
+
+    unsetFlip = () => {
+        this.setState({isFlipped: false, isCorrect: null})
     }
 
     onPress = () => {
         this.props.nextCard()
     }
 
-    checkForRotation = () => {
-        const { rotation } = this.state.data
-        if(rotation){
-            return rotation.gamma < 2.3 && rotation.gamma > 0.9
-        }
+    deviceMotionRender = () => {
+        const { container, cardContainer, answerText, timer } = styles
+        const { remainingTime, card } = this.props
+        const { isFlipped, isCorrect } = this.state
+
+        return(
+            <>
+                {
+                    isFlipped 
+                        ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
+                        : <View style={cardContainer}>
+                            <Text style={answerText}>{card.question}</Text>
+                            <Timer timer={remainingTime} />
+                        </View>
+                }
+            </>
+        )
     }
 
     nonDeviceMotionRender = () => {
@@ -54,27 +97,10 @@ export default class GameCard extends Component {
         )
     }
 
-    deviceMotionRender = () => {
-        const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime, card } = this.props
-        return(
-            <View style={cardContainer}>
-                <Text style={answerText}>{card.question}</Text>
-                <Timer timer={remainingTime} />
-            </View>
-        )
-    }
-
-    checkDeviceMotion = () => {
-        return this.props.deviceMotionActive 
-            ? this.deviceMotionRender()
-            : this.nonDeviceMotionRender()
-    }
-
-
-
     render() {
-       return this.checkDeviceMotion()
+        return this.state.deviceMotionActive
+            ? this.deviceMotionRender() 
+            : this.nonDeviceMotionRender()
     }
 }
 
