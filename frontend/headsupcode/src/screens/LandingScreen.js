@@ -1,9 +1,15 @@
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, Image, StyleSheet} from 'react-native'
 const LandingScreen = () => {
-    return <View style={styles.cardContainer}>
-        <Text style={styles.title}>Landing Screen</Text>
-    </View>
+    return (
+        <View style={styles.cardContainer}>
+            <Text style={styles.title}>Landing Screen</Text>
+            <Image 
+                 source={require('../../assets/codecrown.png')}
+                 style={{width: 400, height: 400}}
+            />
+        </View>
+    )
 }
 
 const color = {
