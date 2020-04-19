@@ -1,22 +1,18 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
+import LandingScreen from './LandingScreen'
 const HomeScreen = () => {
     return <View style={styles.container}>
-        <Text style={styles.title}>Home Screen</Text>
+        <LandingScreen/>
     </View>
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
+        flex: 1,
+        backgroundColor: '#000',
     },
-    title: {
-        fontSize: 19,
-        fontWeight: 'bold',
-        color:'blue'
-    }
-});
+})
 
 export default HomeScreen
