@@ -52,6 +52,14 @@ export default class GameScreen extends Component {
         }
     }
 
+    handleUserResponse = (isCorrect) => {
+        console.log(isCorrect)
+        const newCardsArray = this.state.cards
+        newCardsArray[this.state.cardIndex]['isCorrect'] = isCorrect  
+
+        this.setState({cards: newCardsArray}) 
+    }
+
     checkDeviceMotion = async () => {
         await DeviceMotion.isAvailableAsync() 
             ? this.setState({deviceMotionActive: true}) 
@@ -59,12 +67,25 @@ export default class GameScreen extends Component {
     }
 
     render() {
-        const { remainingTime, cards, deviceMotionActive } = this.state
-        const { startTimer, decrementTimer, clearTimer, currentCard, nextCard } = this
+        const { 
+            remainingTime, 
+            cards, 
+            deviceMotionActive,
+        } = this.state
+
+        const { 
+            startTimer, 
+            decrementTimer, 
+            clearTimer, 
+            currentCard, 
+            nextCard,
+            handleUserResponse,
+        } = this
+
         return (
             <View style={styles.container}>
                 {
-                    remainingTime > -1
+                    remainingTime > 0
                         ? <GameCard 
                             style={styles.container}
                             remainingTime={remainingTime}
@@ -74,8 +95,11 @@ export default class GameScreen extends Component {
                             card={currentCard()}
                             nextCard={nextCard}
                             deviceMotionActive={deviceMotionActive}
+                            handleUserResponse={handleUserResponse}
                         />
-                        : <FinalScreen />
+                        : <FinalScreen 
+                            cards={cards}
+                        />
                 }
             </View>
         )

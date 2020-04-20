@@ -59,10 +59,14 @@ export default class GameCard extends Component {
     }
 
     unsetFlip = () => {
+        console.log(this.state.isCorrect)
+        this.props.handleUserResponse(this.state.isCorrect)
         this.setState({isFlipped: false, isCorrect: null})
+        this.props.nextCard()
     }
 
-    onPress = () => {
+    onPressCorrect = () => {
+        this.props.handleUserResponse(true)
         this.props.nextCard()
     }
 
@@ -92,7 +96,7 @@ export default class GameCard extends Component {
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
-                <Button onPress={this.onPress} title='Next'/>
+                <Button onPress={this.onPressCorrect} title='Correct'/>
             </View>
         )
     }
