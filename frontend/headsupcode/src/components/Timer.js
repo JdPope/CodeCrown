@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, StyleSheet } from 'react-native'
 
-const Timer = ({ timer }) => {
+const Timer = ({ time }) => {
     const { timerStyle } = styles
 
     const calcuateTime = () => {
-        const minutes = Math.trunc(timer/60)
-        const secondsCalculation = `${timer - (60 * minutes)}`
+        const minutes = Math.trunc(time/60)
+        const secondsCalculation = `${time - (60 * minutes)}`
         const seconds = secondsCalculation.length === 1 ? `0${secondsCalculation}` : secondsCalculation
         return `${minutes}:${seconds}`
     }

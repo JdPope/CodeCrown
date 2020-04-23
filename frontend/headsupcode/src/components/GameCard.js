@@ -6,67 +6,64 @@ import Timer from './Timer'
 import Flip from './Flip'
 
 export default class GameCard extends Component {
-
     state = {
         data: {},
-        deviceMotionActive: false,
         isFlipped: false,
         isCorrect: null,
     }
 
     componentDidMount = () => {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
-        this.props.startTimer()
-        this.checkForDeviceMotion()
+        this.startDeviceMotionListener()
     }
 
-    componentWillUnMount = () => {
+    componentWillUnmount = () => {
         this.props.clearTimer()
-    }
-
-    checkForDeviceMotion = async () => {
-        const isDeviceMotionAvailable = await DeviceMotion.isAvailableAsync() 
-        if(isDeviceMotionAvailable) {
-            this.setState({deviceMotionActive: true})
-            this.startDeviceMotionListener()
-        } 
+        DeviceMotion.removeAllListeners()
     }
 
     startDeviceMotionListener = () => {
-        DeviceMotion.addListener(data => {
-            this.setState({ data })
-            DeviceMotion.setUpdateInterval(100)
-            !this.state.isFlipped ? this.checkForRotation() : null
-        })
+        if (this.props.deviceMotionActive) {
+            DeviceMotion.addListener(data => {
+                this.setState({ data })
+                DeviceMotion.setUpdateInterval(100)
+                !this.state.isFlipped ? this.checkForRotation() : null
+            })
+        }
     }
 
     checkForRotation = () => {
         const { rotation } = this.state.data
 
         if(rotation){
-            if(rotation.gamma > 2.3){
+            if(rotation.gamma > 2.5 && rotation.gamma < 2.7){
                 this.setState({
                     isFlipped: true,
                     isCorrect: true,
                 })
-            } else if (rotation.gamma < 1.3){
+            } else if (rotation.gamma < 1.3 && rotation.gamma > 1.1){
                 this.setState({
                     isFlipped: true,
                     isCorrect: false,
                 })
-            } 
+            }
         }
     }
 
     unsetFlip = () => {
-        console.log(this.state.isCorrect)
         this.props.handleUserResponse(this.state.isCorrect)
-        this.setState({isFlipped: false, isCorrect: null})
+        this.setState({ isFlipped: false, isCorrect: null })
         this.props.nextCard()
     }
 
     onPressCorrect = () => {
         this.props.handleUserResponse(true)
+        this.props.nextCard()
+    }
+
+    onPressPass = () => {
+        this.props.handleUserResponse(false)
+        this.setState({ isFlipped: false, isCorrect: null })
         this.props.nextCard()
     }
 
@@ -82,7 +79,7 @@ export default class GameCard extends Component {
                         ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
                         : <View style={cardContainer}>
                             <Text style={answerText}>{card.question}</Text>
-                            <Timer timer={remainingTime} />
+                            <Timer time={remainingTime} />
                         </View>
                 }
             </>
@@ -97,13 +94,14 @@ export default class GameCard extends Component {
                 <Text style={answerText}>{card.question}</Text>
                 <Timer timer={remainingTime} />
                 <Button onPress={this.onPressCorrect} title='Correct'/>
+                <Button onPress={this.onPressPass} title='Pass'/>
             </View>
         )
     }
 
     render() {
-        return this.state.deviceMotionActive
-            ? this.deviceMotionRender() 
+        return this.props.deviceMotionActive
+            ? this.deviceMotionRender()
             : this.nonDeviceMotionRender()
     }
 }
