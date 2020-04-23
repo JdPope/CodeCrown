@@ -8,8 +8,9 @@ import Flip from './Flip'
 export default class GameCard extends Component {
     state = {
         data: {},
-        isFlipped: false,
+        isRotated: false,
         isCorrect: null,
+        isFlippable: true
     }
 
     componentDidMount = () => {
@@ -27,32 +28,37 @@ export default class GameCard extends Component {
             DeviceMotion.addListener(data => {
                 this.setState({ data })
                 DeviceMotion.setUpdateInterval(100)
-                !this.state.isFlipped ? this.checkForRotation() : null
+                !this.state.isRotated ? this.checkForRotation() : null
             })
         }
     }
 
     checkForRotation = () => {
         const { rotation } = this.state.data
+        const { isFlippable } = this.state
 
         if(rotation){
-            if(rotation.gamma > 2.5 && rotation.gamma < 2.7){
+            if(rotation.gamma > 2.5 && rotation.gamma < 2.8 && isFlippable){
                 this.setState({
-                    isFlipped: true,
+                    isRotated: true,
                     isCorrect: true,
+                    isFlippable: false,
                 })
-            } else if (rotation.gamma < 1.3 && rotation.gamma > 1.1){
+            } else if (rotation.gamma < 1.3 && rotation.gamma > 1.0 && isFlippable){
                 this.setState({
-                    isFlipped: true,
+                    isRotated: true,
                     isCorrect: false,
+                    isFlippable: false,
                 })
+            } else if (rotation.gamma < 2.2 && rotation.gamma > 1.6 && !isFlippable){
+                this.setState({ isFlippable: true })
             }
         }
     }
 
     unsetFlip = () => {
         this.props.handleUserResponse(this.state.isCorrect)
-        this.setState({ isFlipped: false, isCorrect: null })
+        this.setState({ isRotated: false, isCorrect: null })
         this.props.nextCard()
     }
 
@@ -63,19 +69,19 @@ export default class GameCard extends Component {
 
     onPressPass = () => {
         this.props.handleUserResponse(false)
-        this.setState({ isFlipped: false, isCorrect: null })
+        this.setState({ isRotated: false, isCorrect: null })
         this.props.nextCard()
     }
 
     deviceMotionRender = () => {
         const { container, cardContainer, answerText, timer } = styles
         const { remainingTime, card } = this.props
-        const { isFlipped, isCorrect } = this.state
+        const { isRotated, isCorrect } = this.state
 
         return(
             <>
                 {
-                    isFlipped 
+                    isRotated 
                         ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
                         : <View style={cardContainer}>
                             <Text style={answerText}>{card.question}</Text>
