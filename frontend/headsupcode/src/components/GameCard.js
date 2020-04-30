@@ -20,7 +20,9 @@ export default class GameCard extends Component {
 
     componentWillUnmount = () => {
         this.props.clearTimer()
-        DeviceMotion.removeAllListeners()
+        this.props.deviceMotionActive
+            ? DeviceMotion.removeAllListeners()
+            : null
     }
 
     startDeviceMotionListener = () => {
@@ -98,7 +100,7 @@ export default class GameCard extends Component {
         return(
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
-                <Timer timer={remainingTime} />
+                <Timer time={remainingTime} />
                 <Button onPress={this.onPressCorrect} title='Correct'/>
                 <Button onPress={this.onPressPass} title='Pass'/>
             </View>
