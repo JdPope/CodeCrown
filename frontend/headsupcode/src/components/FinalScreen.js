@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, Button} from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { ScreenOrientation } from 'expo'
 
 export default class FinalScreen extends Component {
@@ -8,13 +8,29 @@ export default class FinalScreen extends Component {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT_UP)
     }
 
+    getCorrectCards = () => {
+        return this.props.cards.filter(card => {
+            return card.isCorrect
+        })
+    }
+
+    renderQuestions = () => {
+        return this.props.cards.map(card => {
+            return card.isCorrect
+                ? <Text style={styles.correctText} key={card.id}>{card.question}</Text>
+                : <Text style={styles.passText} key={card.id}>{card.question}</Text>
+        })
+    }
+
     render() {
-        const { container, cardContainer, answerText, timer } = styles
-        const { remainingTime } = this.props
+        const { cardContainer, titleText, questionContainer, contentContainer } = styles
 
         return ( 
             <View style={cardContainer}>
-                <Text style={answerText}>Final Screen</Text>
+                <Text style={titleText}>You Got {this.getCorrectCards().length} right!</Text>
+                <ScrollView style={questionContainer} contentContainerStyle={contentContainer}>
+                    {this.renderQuestions()}
+                </ScrollView>
             </View>
         )
     }
@@ -35,20 +51,43 @@ const styles = StyleSheet.create({
 
     cardContainer: {
         flex: 1,
-        borderRadius: 50,
+        marginTop: 15,
+        padding: 20,
+        borderTopRightRadius: 50,
+        borderTopLeftRadius: 50,
+        borderBottomWidth: 0,
         borderWidth: 15,
         borderColor: '#FFF',
         backgroundColor: red,
         overflow: 'hidden',
-        justifyContent: 'center',
         alignItems: 'center',
     },
 
-    answerText: {
-        fontSize: 120,
+    titleText: {
+        fontSize: 35,
+        paddingBottom: 20,
         fontWeight: 'bold',
         color: white,
     },
 
+    questionContainer: {
+        flex: 1,
+        width: '100%',
+    },
+
+    contentContainer: {
+        justifyContent: 'center'
+    },
+
+    correctText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: white,
+    },
+
+    passText: {
+        fontSize: 30,
+        color: white,
+    },
 })
 

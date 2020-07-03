@@ -3,6 +3,7 @@ import {createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from './src/screens/HomeScreen'
 import GameScreen from './src/screens/GameScreen'
+import FinalScreen from './src/components/FinalScreen'
 
 //need a function that gets passed down->home ->deck - you push a button - it creates an instance of gamescreen
 //with that deck's data
@@ -20,9 +21,12 @@ const decks ={
 const navigator = createStackNavigator({
     Home: HomeScreen,
     Game: GameScreen,
+    Final: FinalScreen,
 },{
+
     initialRouteName: 'Home',
     initialRouteParams: {...decks},
+
     defaultNavigationOptions: {
         headerShown: false,
     }

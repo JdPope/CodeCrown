@@ -6,79 +6,88 @@ import Timer from './Timer'
 import Flip from './Flip'
 
 export default class GameCard extends Component {
-
     state = {
         data: {},
-        deviceMotionActive: false,
-        isFlipped: false,
+        isRotated: false,
         isCorrect: null,
+        isFlippable: true
     }
 
     componentDidMount = () => {
         ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT)
-        this.props.startTimer()
-        this.checkForDeviceMotion()
+        this.startDeviceMotionListener()
     }
 
-    componentWillUnMount = () => {
+    componentWillUnmount = () => {
         this.props.clearTimer()
-    }
-
-    checkForDeviceMotion = async () => {
-        const isDeviceMotionAvailable = await DeviceMotion.isAvailableAsync() 
-        if(isDeviceMotionAvailable) {
-            this.setState({deviceMotionActive: true})
-            this.startDeviceMotionListener()
-        } 
+        this.props.deviceMotionActive
+            ? DeviceMotion.removeAllListeners()
+            : null
     }
 
     startDeviceMotionListener = () => {
-        DeviceMotion.addListener(data => {
-            this.setState({ data })
-            DeviceMotion.setUpdateInterval(100)
-            !this.state.isFlipped ? this.checkForRotation() : null
-        })
+        if (this.props.deviceMotionActive) {
+            DeviceMotion.addListener(data => {
+                this.setState({ data })
+                DeviceMotion.setUpdateInterval(100)
+                !this.state.isRotated ? this.checkForRotation() : null
+            })
+        }
     }
 
     checkForRotation = () => {
         const { rotation } = this.state.data
+        const { isFlippable } = this.state
 
         if(rotation){
-            if(rotation.gamma > 2.3){
+            if(rotation.gamma > 2.5 && rotation.gamma < 2.8 && isFlippable){
                 this.setState({
-                    isFlipped: true,
+                    isRotated: true,
                     isCorrect: true,
+                    isFlippable: false,
                 })
-            } else if (rotation.gamma < 1.3){
+            } else if (rotation.gamma < 1.3 && rotation.gamma > 1.0 && isFlippable){
                 this.setState({
-                    isFlipped: true,
+                    isRotated: true,
                     isCorrect: false,
+                    isFlippable: false,
                 })
-            } 
+            } else if (rotation.gamma < 2.2 && rotation.gamma > 1.6 && !isFlippable){
+                this.setState({ isFlippable: true })
+            }
         }
     }
 
     unsetFlip = () => {
-        this.setState({isFlipped: false, isCorrect: null})
+        this.props.handleUserResponse(this.state.isCorrect)
+        this.setState({ isRotated: false, isCorrect: null })
+        this.props.nextCard()
     }
 
-    onPress = () => {
+    onPressCorrect = () => {
+        this.props.handleUserResponse(true)
+        this.props.nextCard()
+    }
+
+    onPressPass = () => {
+        this.props.handleUserResponse(false)
+        this.setState({ isRotated: false, isCorrect: null })
         this.props.nextCard()
     }
 
     deviceMotionRender = () => {
         const { container, cardContainer, answerText, timer } = styles
         const { remainingTime, card } = this.props
-        const { isFlipped, isCorrect } = this.state
+        const { isRotated, isCorrect } = this.state
 
         return(
             <>
                 {
-                    isFlipped 
+                    isRotated 
                         ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
                         : <View style={cardContainer}>
                             <Text style={answerText}>{card.question}</Text>
-                            <Timer timer={remainingTime} />
+                            <Timer time={remainingTime} />
                         </View>
                 }
             </>
@@ -91,15 +100,16 @@ export default class GameCard extends Component {
         return(
             <View style={cardContainer}>
                 <Text style={answerText}>{card.question}</Text>
-                <Timer timer={remainingTime} />
-                <Button onPress={this.onPress} title='Next'/>
+                <Timer time={remainingTime} />
+                <Button onPress={this.onPressCorrect} title='Correct'/>
+                <Button onPress={this.onPressPass} title='Pass'/>
             </View>
         )
     }
 
     render() {
-        return this.state.deviceMotionActive
-            ? this.deviceMotionRender() 
+        return this.props.deviceMotionActive
+            ? this.deviceMotionRender()
             : this.nonDeviceMotionRender()
     }
 }
