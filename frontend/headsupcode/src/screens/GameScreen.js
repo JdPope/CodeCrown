@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { DeviceMotion } from 'expo-sensors'
+import Countdown from '../components/Countdown'
 import GameCard from '../components/GameCard'
 import FinalScreen from '../components/FinalScreen'
 
 export default class GameScreen extends Component {
     state = {
-        remainingTime: 60,
+        remainingTime: 63,
         timer: null,
         cardIndex: 0,
         cards: [
-            {id: 1, question: '--api', answer: 'Makes a Rails API', difficulty: 4, category_id: 2 },
-            {id: 2, question: 'Closure', answer: 'It closes things', difficulty: 2, category_id: 2 },
-            {id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
-            {id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
+            { id: 1, question: '--api', answer: 'Makes a Rails API', difficulty: 4, category_id: 2 },
+            { id: 2, question: 'Closure', answer: 'It closes things', difficulty: 2, category_id: 2 },
+            { id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
+            { id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
         ],
         deviceMotionActive: true,
     }
 
     componentDidMount = () => {
         this.checkDeviceMotion()
+        this.randomizeCards()
     }
 
     startTimer = () => {
@@ -32,11 +34,15 @@ export default class GameScreen extends Component {
 
     clearTimer = () => {
         clearInterval(this.state.timer)
+        this.setState({ timer: null })
     }
 
-    // randomizeCards = () => {
-
-    // }
+    randomizeCards = () => {
+        const randomCards = this.state.cards
+            .map(card => ({ sort: Math.random(), ...card }))
+            .sort((a, b) => a.sort - b.sort)
+        this.setState({ cards: randomCards })
+    }
 
     currentCard = () => {
         const { cards, cardIndex } = this.state
@@ -46,37 +52,76 @@ export default class GameScreen extends Component {
     nextCard = () => {
         const { cards, cardIndex } = this.state
         if(cardIndex < ( cards.length - 1 )){
-            this.setState({cardIndex: cardIndex + 1})
+            this.setState({ cardIndex: cardIndex + 1 })
         } else {
-            this.setState({remainingTime: 0})
+            this.setState({ remainingTime: 0 })
         }
+    }
+
+    handleUserResponse = (isCorrect) => {
+        const newCardsArray = this.state.cards
+        newCardsArray[this.state.cardIndex]['isCorrect'] = isCorrect  
+
+        this.setState({ cards: newCardsArray }) 
     }
 
     checkDeviceMotion = async () => {
         await DeviceMotion.isAvailableAsync() 
-            ? this.setState({deviceMotionActive: true}) 
-            : this.setState({deviceMotionActive: false})
+            ? this.setState({ deviceMotionActive: true }) 
+            : this.setState({ deviceMotionActive: false })
     }
 
+    renderComponent = () => {
+        const { 
+            remainingTime, 
+            cards, 
+            deviceMotionActive,
+        } = this.state
+
+        const { 
+            startTimer, 
+            decrementTimer, 
+            clearTimer, 
+            currentCard, 
+            nextCard,
+            handleUserResponse,
+        } = this
+
+        if (remainingTime > 60) {
+            return (
+                <Countdown 
+                    startTimer={startTimer}
+                    decrementTimer={decrementTimer}
+                    remainingTime={remainingTime}
+                />
+            )
+
+        } else if (remainingTime > 0) {
+            return (
+                <GameCard 
+                    remainingTime={remainingTime}
+                    decrementTimer={decrementTimer}
+                    clearTimer={clearTimer}
+                    card={currentCard()}
+                    nextCard={nextCard}
+                    deviceMotionActive={deviceMotionActive}
+                    handleUserResponse={handleUserResponse}
+                />
+            ) 
+
+        } else {
+            return(
+                <FinalScreen 
+                    cards={cards}
+                />
+            )
+        }
+    } 
+
     render() {
-        const { remainingTime, cards, deviceMotionActive } = this.state
-        const { startTimer, decrementTimer, clearTimer, currentCard, nextCard } = this
         return (
             <View style={styles.container}>
-                {
-                    remainingTime > -1
-                        ? <GameCard 
-                            style={styles.container}
-                            remainingTime={remainingTime}
-                            startTimer={startTimer}
-                            decrementTimer={decrementTimer}
-                            clearTimer={clearTimer}
-                            card={currentCard()}
-                            nextCard={nextCard}
-                            deviceMotionActive={deviceMotionActive}
-                        />
-                        : <FinalScreen />
-                }
+                {this.renderComponent()}
             </View>
         )
     }
