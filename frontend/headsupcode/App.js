@@ -18,9 +18,7 @@ const decks ={
        ]
    }
 
-const startGame = () =>{
-    console.log('start Game')
-}
+
 
 const navigator = createStackNavigator({
     Home: HomeScreen,
@@ -29,7 +27,7 @@ const navigator = createStackNavigator({
 },{
 
     initialRouteName: 'Home',
-    initialRouteParams: {...decks, startGame},
+    initialRouteParams: {...decks},
 
     defaultNavigationOptions: {
         headerShown: false,
