@@ -6,11 +6,15 @@ const fakeData = ['one', 'two', 'three']
 
 const deckRender  = fakeData.map( cardDeck => <Deck deck={cardDeck}/>)
 
-const HomeScreen = () => {
-    return <View style={styles.container}>
+const HomeScreen = (props) => {
+
+    return (
+console.log('props', props.navigation.state.params.decks),
+    
+    <View style={styles.container}>
         <Text style={styles.title}>Home Screen</Text>
         {deckRender}
-    </View>
+    </View>)
 }
 
 const styles = StyleSheet.create({
