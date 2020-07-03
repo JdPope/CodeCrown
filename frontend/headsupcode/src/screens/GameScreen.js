@@ -6,6 +6,7 @@ import GameCard from '../components/GameCard'
 import FinalScreen from '../components/FinalScreen'
 
 export default class GameScreen extends Component {
+    //this.props.navigation.state.params.deck
     state = {
         remainingTime: 63,
         timer: null,

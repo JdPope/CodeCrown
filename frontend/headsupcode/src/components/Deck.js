@@ -3,8 +3,8 @@ import {View, Text, StyleSheet, Button} from 'react-native'
 
 const Deck = (props) => {
     return <View style={styles.container}>
-        <Text style={styles.title}>Deck</Text>
-        <Button onPress={()=>props.startGame()} title='Start Game'/>
+        <Text style={styles.title}>{props.deck.name}</Text>
+        <Button onPress={() => props.startGame(props.deck)} title='Start Game'/>
 
     </View>
 }

@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native'
 import Deck from '../components/Deck'
 
 const HomeScreen = (props) => {
-const startGame = () => props.navigation.navigate('Game')
+const startGame = (deck) => props.navigation.navigate('Game', {deck:deck})
 
 const deckRender = props.navigation.state.params.decks.map(cardDeck => {
     return <Deck deck={cardDeck} key={cardDeck.name} startGame={startGame}/>
