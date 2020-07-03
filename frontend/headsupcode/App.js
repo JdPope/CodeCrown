@@ -9,7 +9,8 @@ const navigator = createStackNavigator({
     Game: GameScreen,
     Final: FinalScreen,
 },{
-    initialRouteName: 'Final',
+
+    initialRouteName: 'Game',
     defaultNavigationOptions: {
         headerShown: false,
     }
