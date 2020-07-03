@@ -1,15 +1,9 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import Deck from '../components/Deck'
 
-const fakeData = ['one', 'two', 'three']
-
-const deckRender  = fakeData.map( cardDeck => <Deck deck={cardDeck}/>)
-
-const HomeScreen = () => {
+const Deck = () => {
     return <View style={styles.container}>
-        <Text style={styles.title}>Home Screen</Text>
-        {deckRender}
+        <Text style={styles.title}>Deck</Text>
     </View>
 }
 
@@ -26,4 +20,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeScreen
+export default Deck
