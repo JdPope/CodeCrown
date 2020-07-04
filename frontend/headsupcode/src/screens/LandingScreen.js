@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet,Image} from 'react-native'
+import {View, StyleSheet, Image} from 'react-native';
 
-
-const LandingScreen = (props) => {
-    const URL = 'https://headsup-api.herokuapp.com/decks';
-    const [decks, setDecks] = useState([]);
-    const [loading, setLoading ] = useState(true);
+const LandingScreen = ({navigation}) => {
+    const URL = 'https://headsup-api.herokuapp.com/decks'
+    const [decks, setDecks] = useState([])
+    const [loading, setLoading ] = useState(true)
     
     useEffect(()=>{
       fetch(URL)
-      .then((response) => response.json())
-      .then( decks  => {
-        setDecks(decks);
-        console.log(decks);
-        setLoading(false);
-      })
+        .then((response) => response.json())
+        .then( decks  => {
+            setDecks(decks)
+            setLoading(false)
+        })
       .catch( error => {
-        console.error(error);
-      });
+        console.error(error)
+      })
   
-    } , []);
+    } , [])
   
     if (loading){
         return (
@@ -31,7 +29,7 @@ const LandingScreen = (props) => {
             </View>
         )
       } else { 
-        return props.navigation.navigate('Home', {decks:decks})
+        return navigation.navigate('Home', {decks:decks})
     }
   };
   

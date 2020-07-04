@@ -1,16 +1,15 @@
 import React from 'react'
-import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native'
+import {Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native'
 import Deck from '../components/Deck'
 
-const HomeScreen = (props) => {
-const startGame = (deck) => props.navigation.navigate('Game', {deck:deck})
+const HomeScreen = ({navigation}) => {
+    const startGame = (deck) => navigation.navigate('Game', {deck:deck})
 
-const deckRender = props.navigation.state.params.decks.map(cardDeck => {
-    return <Deck deck={cardDeck} key={cardDeck.id} startGame={startGame}/>
+    const deckRender = navigation.state.params.decks.map(cardDeck => {
+        return <Deck deck={cardDeck} key={cardDeck.id} startGame={startGame}/>
     })
 
     return (
-
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>Code Crown</Text>
             <ScrollView style={styles.scrollView}>
@@ -31,7 +30,6 @@ const color = {
 const { green, lightGreen, yellow, orange, red, white  } = color
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         borderRadius: 50,
@@ -44,17 +42,11 @@ const styles = StyleSheet.create({
         marginLeft: 60,
         marginRight: 40,
     },
-
     text: {
         fontSize: 50,
         fontWeight: 'bold',
         color: white,
-    },
-    // deck:{
-    //     display: flex,
-    //     flexWrap: wrap,
-    //     justifyContent: space-between      
-    // }
+    }
 })
 
 

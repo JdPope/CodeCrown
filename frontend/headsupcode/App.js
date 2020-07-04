@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import {createAppContainer} from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack'
+import {createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from './src/screens/HomeScreen'
 import GameScreen from './src/screens/GameScreen'
 import FinalScreen from './src/components/FinalScreen'
 import LandingScreen from './src/screens/LandingScreen'
-
-
 
 const navigator = createStackNavigator({
     Home: HomeScreen,
@@ -14,9 +11,7 @@ const navigator = createStackNavigator({
     Final: FinalScreen,
     Landing:LandingScreen,
 },{
-
     initialRouteName: 'Landing',
-
     defaultNavigationOptions: {
         headerShown: false,
     }
