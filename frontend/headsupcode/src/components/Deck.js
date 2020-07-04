@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Button, Image} from 'react-native'
 
 const Deck = (props) => {
     return <View style={styles.container}>
-        <Text style={styles.text}>{props.deck.name}</Text>
+        <Text style={styles.text}>{props.deck.title}</Text>
         <Image style={styles.image} source={props.deck.img}/>
         <Button onPress={() => props.startGame(props.deck)} title='Start Game'/>
     </View>
