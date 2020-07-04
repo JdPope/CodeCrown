@@ -12,7 +12,10 @@ const deckRender = props.navigation.state.params.decks.map(cardDeck => {
     return (
     
     <View style={styles.container}>
-        <Text style={styles.text}>Home Screen</Text>
+        <Text style={styles.text}>
+            Code Crown
+        </Text>
+        {/* <Text style={style.text}>choose a deck to get started</Text> */}
         {deckRender}
     </View>)
 }
@@ -43,11 +46,15 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 120,
+        fontSize: 50,
         fontWeight: 'bold',
         color: white,
     },
-
+    // deck:{
+    //     display: flex,
+    //     flexWrap: wrap,
+    //     justifyContent: space-between      
+    // }
 })
 
 
