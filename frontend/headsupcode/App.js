@@ -13,8 +13,8 @@ import FinalScreen from './src/components/FinalScreen'
 
 const decks ={
     decks:[
-       {name:'react', cards:['one', 'two', 'three']},
-       {name:'rails', cards:['one', 'two', 'three']}
+       {name:'react', cards:[{id:1, concept:'react one'}, {id:2, concept:'react two'}, {id:3, concept:'react three'}]},
+       {name:'rails', cards:[{id:1, concept:'rails one'}, {id:2, concept:'rails two'}, {id:3, concept:'rails three'}]}
        ]
    }
 

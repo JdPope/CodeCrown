@@ -6,17 +6,17 @@ import GameCard from '../components/GameCard'
 import FinalScreen from '../components/FinalScreen'
 
 export default class GameScreen extends Component {
-    //this.props.navigation.state.params.deck
     state = {
         remainingTime: 63,
         timer: null,
         cardIndex: 0,
-        cards: [
-            { id: 1, question: '--api', answer: 'Makes a Rails API', difficulty: 4, category_id: 2 },
-            { id: 2, question: 'Closure', answer: 'It closes things', difficulty: 2, category_id: 2 },
-            { id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
-            { id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
-        ],
+        cards: this.props.navigation.state.params.deck.cards,
+        // cards: [
+        //     { id: 1, question: '--api', answer: 'Makes a Rails API', difficulty: 4, category_id: 2 },
+        //     { id: 2, question: 'Closure', answer: 'It closes things', difficulty: 2, category_id: 2 },
+        //     { id: 3, question: 'Ahmed', answer: 'He is a coder I guess', difficulty: 1, category_id: 2 },
+        //     { id: 4, question: 'Rails', answer: 'Its Ruby', difficulty: 9, category_id: 2 },
+        // ],
         deviceMotionActive: true,
     }
 
@@ -121,6 +121,8 @@ export default class GameScreen extends Component {
 
     render() {
         return (
+            // console.log(this.props.navigation.state.params.deck),
+
             <View style={styles.container}>
                 {this.renderComponent()}
             </View>
