@@ -86,7 +86,7 @@ export default class GameCard extends Component {
                     isRotated 
                         ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
                         : <View style={cardContainer}>
-                            <Text style={answerText}>{card.concept}</Text>
+                            <Text style={answerText}>{card.term}</Text>
                             <Timer time={remainingTime} />
                         </View>
                 }
@@ -99,7 +99,7 @@ export default class GameCard extends Component {
         const { remainingTime, card } = this.props
         return(
             <View style={cardContainer}>
-                <Text style={answerText}>{card.concept}</Text>
+                <Text style={answerText}>{card.term}</Text>
                 <Timer time={remainingTime} />
                 <Button onPress={this.onPressCorrect} title='Correct'/>
                 <Button onPress={this.onPressPass} title='Pass'/>
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     },
 
     answerText: {
-        fontSize: 120,
+        fontSize: 50,
         fontWeight: 'bold',
         color: white,
     },
