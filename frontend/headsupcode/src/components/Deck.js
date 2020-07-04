@@ -1,11 +1,11 @@
 import React from 'react'
-import {View, Text, StyleSheet, Button} from 'react-native'
+import {View, Text, StyleSheet, Button, Image} from 'react-native'
 
 const Deck = (props) => {
     return <View style={styles.container}>
         <Text style={styles.text}>{props.deck.name}</Text>
+        <Image style={styles.image} source={props.deck.img}/>
         <Button onPress={() => props.startGame(props.deck)} title='Start Game'/>
-
     </View>
 }
 
@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: white,
     },
+    image: {
+        width: 107,
+        height: 165,
+        padding: 10
+      }
 
 })
 
