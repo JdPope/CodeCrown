@@ -1,15 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {View, Text, StyleSheet,Image} from 'react-native'
-const LandingScreen = () => {
-    return (
-        <View style={styles.cardContainer}>
-            <Image 
-                 source={require('../../assets/codecrown.png')}
-                 style={{width: 400, height: 400}}
-            />
-        </View>
-    )
-}
+
+
+const LandingScreen = (props) => {
+    const URL = 'https://headsup-api.herokuapp.com/decks';
+    const [decks, setDecks] = useState([]);
+    const [loading, setLoading ] = useState(true);
+    
+    useEffect(()=>{
+      fetch(URL)
+      .then((response) => response.json())
+      .then( decks  => {
+        setDecks(decks);
+        console.log(decks);
+        setLoading(false);
+      })
+      .catch( error => {
+        console.error(error);
+      });
+  
+    } , []);
+  
+    if (loading){
+        return (
+            <View style={styles.cardContainer}>
+                <Image 
+                     source={require('../../assets/codecrown.png')}
+                     style={{width: 400, height: 400}}
+                />
+            </View>
+        )
+      } else { 
+        return props.navigation.navigate('Home', {decks:decks})
+    }
+  };
+  
+export default LandingScreen
 
 const color = {
     green: 'hsla(161, 92%, 15%, 1)',
@@ -45,5 +71,3 @@ const styles = StyleSheet.create({
         color:'blue'
     }
 });
-
-export default LandingScreen
