@@ -2,32 +2,53 @@ import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import Deck from '../components/Deck'
 
-const fakeData = ['one', 'two', 'three']
-
-const deckRender  = fakeData.map( cardDeck => <Deck deck={cardDeck}/>)
-
 const HomeScreen = (props) => {
+const startGame = (deck) => props.navigation.navigate('Game', {deck:deck})
+
+const deckRender = props.navigation.state.params.decks.map(cardDeck => {
+    return <Deck deck={cardDeck} key={cardDeck.name} startGame={startGame}/>
+    })
 
     return (
-console.log('props', props.navigation.state.params.decks),
     
     <View style={styles.container}>
-        <Text style={styles.title}>Home Screen</Text>
+        <Text style={styles.text}>Home Screen</Text>
         {deckRender}
     </View>)
 }
+const color = {
+    green: 'hsla(161, 92%, 15%, 1)',
+    lightGreen: 'hsla(63, 28%, 72%, 1)',
+    yellow: 'hsla(49, 90%, 56%, 1)',
+    orange: 'hsla(16, 88%, 57%, 1)',
+    red: 'hsla(5, 62%, 41%, 1)',
+    white: '#FFF'
+}
+
+const { green, lightGreen, yellow, orange, red, white  } = color
 
 const styles = StyleSheet.create({
+
     container: {
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
+        flex: 1,
+        borderRadius: 50,
+        borderWidth: 15,
+        borderColor: '#FFF',
+        backgroundColor: red,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 60,
+        marginRight: 40,
     },
-    title: {
-        fontSize: 19,
+
+    text: {
+        fontSize: 120,
         fontWeight: 'bold',
-        color:'blue'
-    }
-});
+        color: white,
+    },
+
+})
+
 
 export default HomeScreen

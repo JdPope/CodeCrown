@@ -1,9 +1,11 @@
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, Button} from 'react-native'
 
-const Deck = () => {
+const Deck = (props) => {
     return <View style={styles.container}>
-        <Text style={styles.title}>Deck</Text>
+        <Text style={styles.title}>{props.deck.name}</Text>
+        <Button onPress={() => props.startGame(props.deck)} title='Start Game'/>
+
     </View>
 }
 
