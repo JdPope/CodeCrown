@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native'
+import {Text, StyleSheet, SafeAreaView, ScrollView, View} from 'react-native'
 import Deck from '../components/Deck'
 
 const HomeScreen = ({navigation}) => {
@@ -10,12 +10,14 @@ const HomeScreen = ({navigation}) => {
     })
 
     return (
+      <View style={styles.background}>
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>Code Crown</Text>
             <ScrollView style={styles.scrollView}>
                 {deckRender}
             </ScrollView>
         </SafeAreaView>
+      </View>
     )
 }
 const color = {
@@ -30,6 +32,10 @@ const color = {
 const { green, lightGreen, yellow, orange, red, white  } = color
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: 'black'
+  },
     container: {
         flex: 1,
         borderRadius: 50,
@@ -39,8 +45,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 60,
-        marginRight: 40,
     },
     text: {
         fontSize: 50,
