@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native'
 import Deck from '../components/Deck'
 
 const HomeScreen = (props) => {
@@ -10,14 +10,14 @@ const deckRender = props.navigation.state.params.decks.map(cardDeck => {
     })
 
     return (
-    
-    <View style={styles.container}>
-        <Text style={styles.text}>
-            Code Crown
-        </Text>
-        {/* <Text style={style.text}>choose a deck to get started</Text> */}
-        {deckRender}
-    </View>)
+
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.text}>Code Crown</Text>
+            <ScrollView style={styles.scrollView}>
+                {deckRender}
+            </ScrollView>
+        </SafeAreaView>
+    )
 }
 const color = {
     green: 'hsla(161, 92%, 15%, 1)',
