@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
+import { TouchableOpacity} from 'react-native-gesture-handler'
 import { ScreenOrientation } from 'expo'
 import { DeviceMotion } from 'expo-sensors'
 import Timer from './Timer'
@@ -101,8 +102,20 @@ export default class GameCard extends Component {
             <View style={cardContainer}>
                 <Text style={answerText}>{card.term}</Text>
                 <Timer time={remainingTime} />
-                <Button onPress={this.onPressCorrect} title='Correct'/>
-                <Button onPress={this.onPressPass} title='Pass'/>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.onPressCorrect}
+                    style={styles.appButtonContainer}
+                >
+                    <Text style={styles.appButtonText}>Correct</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={this.onPresPass}
+                    style={styles.appButtonContainer}
+                >
+                    <Text style={styles.appButtonText}>Pass</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -145,6 +158,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: white,
     },
+    appButtonContainer: {
+        elevation: 8,
+        backgroundColor: yellow,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: white,
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+      }
 
 })
 
