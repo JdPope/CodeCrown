@@ -111,7 +111,7 @@ export default class GameCard extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={this.onPresPass}
+                    onPress={this.onPressPass}
                     style={styles.appButtonContainer}
                 >
                     <Text style={styles.appButtonText}>Pass</Text>
