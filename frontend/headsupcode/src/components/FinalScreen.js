@@ -15,10 +15,11 @@ export default class FinalScreen extends Component {
     }
 
     renderQuestions = () => {
+        // console.log('render questions')
         return this.props.cards.map(card => {
             return card.isCorrect
-                ? <Text style={styles.correctText} key={card.id}>{card.question}</Text>
-                : <Text style={styles.passText} key={card.id}>{card.question}</Text>
+                ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
+                : <Text style={styles.passText} key={card.id}>{card.term}</Text>
         })
     }
 
