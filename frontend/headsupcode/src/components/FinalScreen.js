@@ -17,7 +17,6 @@ export default class FinalScreen extends Component {
     }
 
     renderQuestions = () => {
-        // console.log('render questions')
         return this.props.cards.map(card => {
             return card.isCorrect
                 ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
@@ -65,7 +64,8 @@ const styles = StyleSheet.create({
         padding: 20,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
-        borderBottomWidth: 0,
+        borderBottomRightRadius:50,
+        borderBottomLeftRadius:50,
         borderWidth: 15,
         borderColor: '#FFF',
         backgroundColor: red,
@@ -81,8 +81,7 @@ const styles = StyleSheet.create({
     },
 
     questionContainer: {
-        flex: 1,
-        width: '100%',
+        flex: 1
     },
 
     contentContainer: {
