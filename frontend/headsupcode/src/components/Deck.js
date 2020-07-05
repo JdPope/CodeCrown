@@ -30,16 +30,13 @@ const { green, lightGreen, yellow, orange, red, white  } = color
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
         borderRadius: 50,
         borderWidth: 15,
         borderColor: '#FFF',
         backgroundColor: red,
         overflow: 'hidden',
         justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 60,
-        marginRight: 40,
+        alignItems: 'center'
     },
 
     text: {

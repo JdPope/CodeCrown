@@ -13,8 +13,10 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.background}>
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>Code Crown</Text>
-            <ScrollView style={styles.scrollView}>
-                {deckRender}
+            <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+                <View style={styles.deckContainer}>
+                 {deckRender}
+                </View>
             </ScrollView>
         </SafeAreaView>
       </View>
@@ -36,6 +38,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black'
   },
+  contentContainerStyle:{
+        justifyContent: 'center',
+        alignItems:'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        flex: 1,     
+  },
+
     container: {
         flex: 1,
         borderRadius: 50,
@@ -44,13 +54,23 @@ const styles = StyleSheet.create({
         backgroundColor: red,
         overflow: 'hidden',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center', 
+        width:'100%'
     },
     text: {
         fontSize: 50,
         fontWeight: 'bold',
         color: white,
+    },
+    deckContainer:{
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent:'center',
+        alignItems:'center'
     }
+    // deck:{
+    //     width:'20px'
+    // }
 })
 
 
