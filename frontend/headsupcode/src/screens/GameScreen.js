@@ -13,6 +13,8 @@ export default class GameScreen extends Component {
         cards: this.props.navigation.state.params.deck.cards,
         deviceMotionActive: true,
     }
+    returnHome = (event) => this.props.navigation.navigate('Home')
+
 
     componentDidMount = () => {
         this.checkDeviceMotion()
@@ -107,6 +109,7 @@ export default class GameScreen extends Component {
         } else {
             return(
                 <FinalScreen 
+                    returnHome={this.returnHome}
                     cards={cards}
                 />
             )

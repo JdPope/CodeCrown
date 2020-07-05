@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native'
 import { ScreenOrientation } from 'expo'
 
 export default class FinalScreen extends Component {
@@ -32,6 +32,7 @@ export default class FinalScreen extends Component {
                 <ScrollView style={questionContainer} contentContainerStyle={contentContainer}>
                     {this.renderQuestions()}
                 </ScrollView>
+                <Button onPress={(event) => this.props.returnHome(event)} title='Home'/>
             </View>
         )
     }
