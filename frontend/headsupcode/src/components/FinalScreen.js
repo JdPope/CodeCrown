@@ -35,7 +35,7 @@ export default class FinalScreen extends Component {
                 </ScrollView>
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => this.props.returnHome(event)}
+                    onPress={(event) => this.props.returnHome(event)}
                     style={styles.appButtonContainer}
                 >
                     <Text style={styles.appButtonText}>New Game</Text>
