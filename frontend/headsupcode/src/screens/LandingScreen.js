@@ -17,16 +17,18 @@ const LandingScreen = ({navigation}) => {
         console.error(error)
       })
   
-    } , [])
+    }, [])
   
     if (loading){
         return (
+          <View style={styles.container}>
             <View style={styles.cardContainer}>
                 <Image 
                      source={require('../../assets/codecrown.png')}
                      style={{width: 400, height: 400}}
                 />
             </View>
+          </View>
         )
       } else { 
         return navigation.navigate('Home', {decks:decks})
@@ -60,8 +62,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 60,
-        marginRight: 40,
     },
     title: {
         fontSize: 19,
