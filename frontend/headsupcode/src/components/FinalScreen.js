@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, ScrollView, Button } from 'react-native'
 import { ScreenOrientation } from 'expo'
+import { TouchableOpacity} from 'react-native-gesture-handler'
+
 
 export default class FinalScreen extends Component {
 
@@ -15,7 +17,6 @@ export default class FinalScreen extends Component {
     }
 
     renderQuestions = () => {
-        // console.log('render questions')
         return this.props.cards.map(card => {
             return card.isCorrect
                 ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
@@ -32,7 +33,13 @@ export default class FinalScreen extends Component {
                 <ScrollView style={questionContainer} contentContainerStyle={contentContainer}>
                     {this.renderQuestions()}
                 </ScrollView>
-                <Button onPress={(event) => this.props.returnHome(event)} title='Home'/>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.props.returnHome(event)}
+                    style={styles.appButtonContainer}
+                >
+                    <Text style={styles.appButtonText}>New Game</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -57,7 +64,8 @@ const styles = StyleSheet.create({
         padding: 20,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
-        borderBottomWidth: 0,
+        borderBottomRightRadius:50,
+        borderBottomLeftRadius:50,
         borderWidth: 15,
         borderColor: '#FFF',
         backgroundColor: red,
@@ -73,8 +81,7 @@ const styles = StyleSheet.create({
     },
 
     questionContainer: {
-        flex: 1,
-        width: '100%',
+        flex: 1
     },
 
     contentContainer: {
@@ -91,5 +98,19 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: white,
     },
+    appButtonContainer: {
+        elevation: 8,
+        backgroundColor: yellow,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: white,
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+      }
 })
 

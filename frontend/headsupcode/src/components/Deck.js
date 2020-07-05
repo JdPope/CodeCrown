@@ -1,11 +1,18 @@
 import React from 'react'
 import {View, Text, StyleSheet, Button, Image} from 'react-native'
+import { TouchableOpacity} from 'react-native-gesture-handler'
 
 const Deck = ({startGame,deck}) => {
     return <View style={styles.container}>
         <Text style={styles.text}>{deck.title}</Text>
         <Image style={styles.image} source={deck.img}/>
-        <Button onPress={() => startGame(deck)} title='Start Game'/>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => startGame(deck)}
+            style={styles.appButtonContainer}
+        >
+            <Text style={styles.appButtonText}>Start Game</Text>
+        </TouchableOpacity>
     </View>
 }
 
@@ -44,6 +51,20 @@ const styles = StyleSheet.create({
         width: 107,
         height: 165,
         padding: 10
+      },
+      appButtonContainer: {
+        elevation: 8,
+        backgroundColor: yellow,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: white,
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
       }
 
 })
