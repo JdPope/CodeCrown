@@ -2,7 +2,9 @@ import React from 'react'
 import {Text, StyleSheet, SafeAreaView, ScrollView, View} from 'react-native'
 import Deck from '../components/Deck'
 
-const HomeScreen = ({navigation}) => {
+
+
+const HomeScreen = ({navigation}) => { 
     const startGame = (deck) => navigation.navigate('Game', {deck:deck})
 
     const deckRender = navigation.state.params.decks.map(cardDeck => {

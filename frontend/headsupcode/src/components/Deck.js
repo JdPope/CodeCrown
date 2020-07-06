@@ -5,7 +5,7 @@ import { TouchableOpacity} from 'react-native-gesture-handler'
 const Deck = ({startGame,deck}) => {
     return <View style={styles.container}>
         <Text style={styles.text}>{deck.title}</Text>
-        <Image style={styles.image} source={deck.img}/>
+        <Image style={styles.image} source={{uri: deck.img}}/>
         <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => startGame(deck)}
