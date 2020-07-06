@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text } from 'react-native'
 import { TouchableOpacity} from 'react-native-gesture-handler'
 import { ScreenOrientation } from 'expo'
 import { DeviceMotion } from 'expo-sensors'
+import { styles }  from '../styles/style';
 import Timer from './Timer'
 import Flip from './Flip'
 
@@ -77,7 +78,7 @@ export default class GameCard extends Component {
     }
 
     deviceMotionRender = () => {
-        const { container, cardContainer, answerText, timer } = styles
+        const { gameCardContainer, titleText } = styles
         const { remainingTime, card } = this.props
         const { isRotated, isCorrect } = this.state
 
@@ -86,8 +87,8 @@ export default class GameCard extends Component {
                 {
                     isRotated 
                         ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip}/>
-                        : <View style={cardContainer}>
-                            <Text style={answerText}>{card.term}</Text>
+                        : <View style={gameCardContainer}>
+                            <Text style={titleText}>{card.term}</Text>
                             <Timer time={remainingTime} />
                         </View>
                 }
@@ -96,11 +97,11 @@ export default class GameCard extends Component {
     }
 
     nonDeviceMotionRender = () => {
-        const { container, cardContainer, answerText, timer } = styles
+        const { gameCardContainer, titleText } = styles
         const { remainingTime, card } = this.props
         return(
-            <View style={cardContainer}>
-                <Text style={answerText}>{card.term}</Text>
+            <View style={gameCardContainer}>
+                <Text style={titleText}>{card.term}</Text>
                 <Timer time={remainingTime} />
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -126,52 +127,4 @@ export default class GameCard extends Component {
             : this.nonDeviceMotionRender()
     }
 }
-
-const color = {
-    green: 'hsla(161, 92%, 15%, 1)',
-    lightGreen: 'hsla(63, 28%, 72%, 1)',
-    yellow: 'hsla(49, 90%, 56%, 1)',
-    orange: 'hsla(16, 88%, 57%, 1)',
-    red: 'hsla(5, 62%, 41%, 1)',
-    white: '#FFF'
-}
-
-const { green, lightGreen, yellow, orange, red, white  } = color
-
-const styles = StyleSheet.create({
-
-    cardContainer: {
-        flex: 1,
-        borderRadius: 50,
-        borderWidth: 15,
-        borderColor: '#FFF',
-        backgroundColor: red,
-        overflow: 'hidden',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 60,
-        marginRight: 40,
-    },
-
-    answerText: {
-        fontSize: 50,
-        fontWeight: 'bold',
-        color: white,
-    },
-    appButtonContainer: {
-        elevation: 8,
-        backgroundColor: yellow,
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-      },
-      appButtonText: {
-        fontSize: 18,
-        color: white,
-        fontWeight: "bold",
-        alignSelf: "center",
-        textTransform: "uppercase"
-      }
-
-})
 

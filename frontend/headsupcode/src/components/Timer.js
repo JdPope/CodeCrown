@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, StyleSheet } from 'react-native'
+import { Text } from 'react-native'
+import { styles }  from '../styles/style';
 
 const Timer = ({ time }) => {
     const { timerStyle } = styles
@@ -13,12 +14,5 @@ const Timer = ({ time }) => {
 
     return <Text style={timerStyle}>{calcuateTime()}</Text>
 }
-
-const styles = StyleSheet.create({
-    timerStyle: {
-        fontSize: 50,
-        color: '#FFF',
-    }
-})
 
 export default Timer

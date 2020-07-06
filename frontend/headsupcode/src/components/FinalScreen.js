@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView, Button } from 'react-native'
-import { ScreenOrientation } from 'expo'
+import { View, Text, ScrollView } from 'react-native'
 import { TouchableOpacity} from 'react-native-gesture-handler'
-
+import { ScreenOrientation } from 'expo'
+import { styles }  from '../styles/style';
 
 export default class FinalScreen extends Component {
 
@@ -30,7 +30,7 @@ export default class FinalScreen extends Component {
         return ( 
             <View style={cardContainer}>
                 <Text style={titleText}>You Got {this.getCorrectCards().length} right!</Text>
-                <ScrollView style={questionContainer} contentContainerStyle={contentContainer}>
+              <ScrollView style={questionContainer} contentContainerStyle={{justifyContent: 'center'}}>
                     {this.renderQuestions()}
                 </ScrollView>
                 <TouchableOpacity
@@ -44,73 +44,3 @@ export default class FinalScreen extends Component {
         )
     }
 }
-
-const color = {
-    green: 'hsla(161, 92%, 15%, 1)',
-    lightGreen: 'hsla(63, 28%, 72%, 1)',
-    yellow: 'hsla(49, 90%, 56%, 1)',
-    orange: 'hsla(16, 88%, 57%, 1)',
-    red: 'hsla(5, 62%, 41%, 1)',
-    white: '#FFF'
-}
-
-const { green, lightGreen, yellow, orange, red, white  } = color
-
-const styles = StyleSheet.create({
-
-    cardContainer: {
-        flex: 1,
-        marginTop: 15,
-        padding: 20,
-        borderTopRightRadius: 50,
-        borderTopLeftRadius: 50,
-        borderBottomRightRadius:50,
-        borderBottomLeftRadius:50,
-        borderWidth: 15,
-        borderColor: '#FFF',
-        backgroundColor: red,
-        overflow: 'hidden',
-        alignItems: 'center',
-    },
-
-    titleText: {
-        fontSize: 35,
-        paddingBottom: 20,
-        fontWeight: 'bold',
-        color: white,
-    },
-
-    questionContainer: {
-        flex: 1
-    },
-
-    contentContainer: {
-        justifyContent: 'center'
-    },
-
-    correctText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: white,
-    },
-
-    passText: {
-        fontSize: 30,
-        color: white,
-    },
-    appButtonContainer: {
-        elevation: 8,
-        backgroundColor: yellow,
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-      },
-      appButtonText: {
-        fontSize: 18,
-        color: white,
-        fontWeight: "bold",
-        alignSelf: "center",
-        textTransform: "uppercase"
-      }
-})
-
