@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HeadsUpCode",
-    "slug": "headsupcode",
+    "name": "Code Crown",
+    "slug": "codecrown",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -11,7 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/code_crown_google.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -25,6 +25,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.facepalmsoftware.codecrown",
+      "versionCode": 1
     }
   }
 }
