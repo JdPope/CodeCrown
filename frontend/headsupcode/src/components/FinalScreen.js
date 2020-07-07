@@ -17,7 +17,10 @@ export default class FinalScreen extends Component {
   }
 
   renderQuestions = () => {
-    return this.props.cards.map(card => {
+    const answeredCards = this.props.cards.filter(card => {
+      return card.isCorrect || card.isCorrect === false
+    })
+    return answeredCards.map(card => {
       return card.isCorrect
         ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
         : <Text style={styles.passText} key={card.id}>{card.term}</Text>
