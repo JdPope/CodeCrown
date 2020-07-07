@@ -15,7 +15,7 @@
 - [Ruby on Rails](https://rubyonrails.org/)
 
 ## Features :star2:
-
+- [Rails Repo](https://github.com/Nepsaco/headsup_api)
 
 ## Getting Started :man_astronaut:
 
