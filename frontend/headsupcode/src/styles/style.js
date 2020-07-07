@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native';
 import { colors } from './colors';
-const { green, lightGreen, yellow, orange, red, white, black } = colors
+// const { green, lightGreen, yellow, orange, red, white, black } = colors
+const { green, red, blue, white } = colors
 
 export const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: black
+    backgroundColor: blue[0]
   },
   cardContainer: {
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
-    borderColor: white,
-    backgroundColor: red,
+    borderColor: blue[8],
+    backgroundColor: blue[8],
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -20,20 +21,17 @@ export const styles = StyleSheet.create({
   flipText: {
     fontSize: 120,
     fontWeight: 'bold',
-    color: white
+    color: blue[1]
   },
   titleText: {
     fontSize: 50,
     fontWeight: 'bold',
-    color: white
+    color: blue[1]
   },
   text: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: white,
-  },
-  image: {
-    width: '100%',
+    color: blue[1],
   },
   scrollView: {
     flex: 1,
@@ -53,13 +51,15 @@ export const styles = StyleSheet.create({
     elevation: 3,
     paddingLeft: 3,
     paddingRight: 3,
-    shadowColor: black,
-    shadowOffset: {width: 1, height: 1},
-    shadowRadius: 5,
+    shadowColor: blue[0],
+    shadowOffset: {width: 3, height: 3},
+    shadowRadius: 1,
+    shadowOpacity: 0.15,
   },
   questionContainer: {
     flex:1,
-    width: '100%'
+    width: '100%',
+    padding: 20,
   },
   questionContent: {
     justifyContent: 'center',
@@ -68,18 +68,18 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: white
+    backgroundColor: blue[1]
   },
   timerStyle: {
     fontSize: 50,
-    color: 'white',
+    color: blue[1],
   },
   gameCardContainer : {
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
-    borderColor: white,
-    backgroundColor: red,
+    borderColor: blue[8],
+    backgroundColor: blue[8],
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -89,10 +89,10 @@ export const styles = StyleSheet.create({
   },
   countdownText: {
     fontWeight: 'bold',
-    color: white,
+    color: blue[1],
   },
   green: {
-    backgroundColor: green,
+    backgroundColor: green[5],
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
     marginRight: 40
   },
   orange: {
-    backgroundColor: orange,
+    backgroundColor: red[5],
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
@@ -118,29 +118,30 @@ export const styles = StyleSheet.create({
   correctText: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: white,
+    color: blue[1],
+    paddingBottom: 20,
   },
   passText: {
     fontSize: 30,
-    color: white,
+    color: blue[1],
+    paddingBottom: 20,
   },
   appButtonContainer: {
     elevation: 8,
-    backgroundColor: yellow,
-    borderRadius: 10,
+    width: '100%',
+    backgroundColor: blue[8],
     paddingVertical: 10,
-    paddingHorizontal: 12
   },
   appButtonText: {
     fontSize: 18,
-    color: white,
+    color: blue[0],
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
   },
   deckImage: {
-    width: 107,
-    height: 165,
+    width: '100%',
+    height: 160,
     padding: 10
   },
 })
