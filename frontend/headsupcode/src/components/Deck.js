@@ -12,7 +12,7 @@ const Deck = ({startGame, deck}) => {
             onPress={() => startGame(deck)}
             style={styles.appButtonContainer}
         >
-            <Text style={styles.appButtonText}>Start Game</Text>
+            <Text style={styles.appButtonText}>Play</Text>
         </TouchableOpacity>
   </View>
 }
