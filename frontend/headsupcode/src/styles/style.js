@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     color: blue[1],
   },
   green: {
-    backgroundColor: green[5],
+    backgroundColor: green[4],
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
     marginRight: 40
   },
   orange: {
-    backgroundColor: red[5],
+    backgroundColor: red[2],
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
@@ -138,6 +138,11 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
+  },
+  fullWidth: {
+    flex:1,
+    justifyContent: 'flex-end',
+    width: '100%'
   },
   deckImage: {
     width: '100%',

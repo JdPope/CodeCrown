@@ -28,7 +28,7 @@ export default class FinalScreen extends Component {
   }
 
   render() {
-    const { cardContainer, titleText, questionContainer, contentContainer } = styles
+    const { cardContainer, titleText, questionContainer, contentContainer, fullWidth } = styles
 
     return ( 
       <View style={cardContainer}>
@@ -38,13 +38,15 @@ export default class FinalScreen extends Component {
             {this.renderQuestions()}
           </View>
         </ScrollView>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={(event) => this.props.returnHome(event)}
-          style={styles.appButtonContainer}
-        >
-          <Text style={styles.appButtonText}>New Game</Text>
-        </TouchableOpacity>
+        <View style={fullWidth}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={(event) => this.props.returnHome(event)}
+            style={styles.appButtonContainer}
+          >
+            <Text style={styles.appButtonText}>New Game</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
