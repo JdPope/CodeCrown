@@ -12,7 +12,7 @@ export default class GameCard extends Component {
         data: {},
         isRotated: false,
         isCorrect: null,
-        isFlippable: true
+        isFlippable: false
     }
 
     componentDidMount = () => {
@@ -54,7 +54,7 @@ export default class GameCard extends Component {
                     isCorrect: false,
                     isFlippable: false,
                 })
-            } else if (rotation.gamma < 2.2 && rotation.gamma > 1.6 && !isFlippable){
+            } else if (rotation.gamma < 2.2 && rotation.gamma > 1.7 && !isFlippable){
                 this.setState({ isFlippable: true })
             }
         }
