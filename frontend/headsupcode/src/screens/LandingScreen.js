@@ -21,16 +21,19 @@ const LandingScreen = ({ navigation }) => {
       });
   }, []);
 
-  return (loading
-    ? (
-      <View style={styles.background}>
-        <StatusBar hidden />
-        <View style={styles.cardContainer}>
-          <ActivityIndicator size="large" />
+  const { background, cardContainer } = styles;
+
+  return (
+    loading
+      ? (
+        <View style={background}>
+          <StatusBar hidden />
+          <View style={cardContainer}>
+            <ActivityIndicator size="large" />
+          </View>
         </View>
-      </View>
-    )
-    : navigation.navigate('Home', { decks })
+      )
+      : navigation.navigate('Home', { decks })
   );
 };
 
