@@ -25,5 +25,6 @@ module.exports = {
   rules: {
     'global-require': 0,
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'react/prop-types': 0,
   },
 };

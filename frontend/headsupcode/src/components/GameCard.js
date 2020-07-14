@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ScreenOrientation } from 'expo';
@@ -7,125 +7,114 @@ import { styles } from '../styles/style';
 import Timer from './Timer';
 import Flip from './Flip';
 
-export default class GameCard extends Component {
-    state = {
-      data: {},
-      isRotated: false,
-      isCorrect: null,
-      isFlippable: false,
-    }
+const GameCard = ({
+  remainingTime, card, clearTimer, deviceMotionActive, handleUserResponse, nextCard,
+}) => {
+  const [data, setData] = useState({});
+  const [isRotated, setIsRotated] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(null);
+  const [isFlippable, setIsFlippable] = useState(false);
 
-    componentDidMount = () => {
-      ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
-      this.startDeviceMotionListener();
-    }
+  const checkForRotation = () => {
+    const { rotation } = data;
 
-    componentWillUnmount = () => {
-      this.props.clearTimer();
-      this.props.deviceMotionActive
+    if (rotation) {
+      if (rotation.gamma > 2.5 && rotation.gamma < 2.8 && isFlippable) {
+        setIsRotated(true);
+        setIsCorrect(true);
+        setIsFlippable(false);
+      } else if (rotation.gamma < 1.3 && rotation.gamma > 1.0 && isFlippable) {
+        setIsRotated(true);
+        setIsCorrect(false);
+        setIsFlippable(false);
+      } else if (rotation.gamma < 2.2 && rotation.gamma > 1.7 && !isFlippable) {
+        setIsFlippable(true);
+      }
+    }
+  };
+
+  const startDeviceMotionListener = () => {
+    if (deviceMotionActive) {
+      DeviceMotion.addListener((newData) => {
+        setData({ newData });
+        DeviceMotion.setUpdateInterval(100);
+        return !isRotated ? checkForRotation() : null;
+      });
+    }
+  };
+
+  useEffect(() => {
+    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+    startDeviceMotionListener();
+    return () => {
+      clearTimer();
+      return deviceMotionActive
         ? DeviceMotion.removeAllListeners()
         : null;
-    }
+    };
+  }, []);
 
-    startDeviceMotionListener = () => {
-      if (this.props.deviceMotionActive) {
-        DeviceMotion.addListener((data) => {
-          this.setState({ data });
-          DeviceMotion.setUpdateInterval(100);
-          !this.state.isRotated ? this.checkForRotation() : null;
-        });
-      }
-    }
+  const unsetFlip = () => {
+    handleUserResponse(isCorrect);
+    setIsRotated(false);
+    setIsCorrect(null);
+    nextCard();
+  };
 
-    checkForRotation = () => {
-      const { rotation } = this.state.data;
-      const { isFlippable } = this.state;
+  const onPressCorrect = () => {
+    handleUserResponse(true);
+    nextCard();
+  };
 
-      if (rotation) {
-        if (rotation.gamma > 2.5 && rotation.gamma < 2.8 && isFlippable) {
-          this.setState({
-            isRotated: true,
-            isCorrect: true,
-            isFlippable: false,
-          });
-        } else if (rotation.gamma < 1.3 && rotation.gamma > 1.0 && isFlippable) {
-          this.setState({
-            isRotated: true,
-            isCorrect: false,
-            isFlippable: false,
-          });
-        } else if (rotation.gamma < 2.2 && rotation.gamma > 1.7 && !isFlippable) {
-          this.setState({ isFlippable: true });
-        }
-      }
-    }
+  const onPressPass = () => {
+    handleUserResponse(false);
+    setIsRotated(false);
+    setIsCorrect(null);
+    nextCard();
+  };
 
-    unsetFlip = () => {
-      this.props.handleUserResponse(this.state.isCorrect);
-      this.setState({ isRotated: false, isCorrect: null });
-      this.props.nextCard();
-    }
+  const deviceMotionRender = () => {
+    const { gameCardContainer, titleText } = styles;
 
-    onPressCorrect = () => {
-      this.props.handleUserResponse(true);
-      this.props.nextCard();
-    }
-
-    onPressPass = () => {
-      this.props.handleUserResponse(false);
-      this.setState({ isRotated: false, isCorrect: null });
-      this.props.nextCard();
-    }
-
-    deviceMotionRender = () => {
-      const { gameCardContainer, titleText } = styles;
-      const { remainingTime, card } = this.props;
-      const { isRotated, isCorrect } = this.state;
-
-      return (
-        <>
-          {
-                    isRotated
-                      ? <Flip isCorrect={isCorrect} unsetFlip={this.unsetFlip} />
-                      : (
-                        <View style={gameCardContainer}>
-                          <Text style={titleText}>{card.term}</Text>
-                          <Timer time={remainingTime} />
-                        </View>
-                      )
-                }
-        </>
-      );
-    }
-
-    nonDeviceMotionRender = () => {
-      const { gameCardContainer, titleText } = styles;
-      const { remainingTime, card } = this.props;
-      return (
+    return isRotated
+      ? <Flip isCorrect={isCorrect} unsetFlip={unsetFlip} />
+      : (
         <View style={gameCardContainer}>
           <Text style={titleText}>{card.term}</Text>
           <Timer time={remainingTime} />
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={this.onPressCorrect}
-            style={styles.appButtonContainer}
-          >
-            <Text style={styles.appButtonText}>Correct</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={this.onPressPass}
-            style={styles.appButtonContainer}
-          >
-            <Text style={styles.appButtonText}>Pass</Text>
-          </TouchableOpacity>
         </View>
       );
-    }
+  };
 
-    render() {
-      return this.props.deviceMotionActive
-        ? this.deviceMotionRender()
-        : this.nonDeviceMotionRender();
-    }
-}
+  const nonDeviceMotionRender = () => {
+    const {
+      gameCardContainer, titleText, appButtonContainer, appButtonText,
+    } = styles;
+    return (
+      <View style={gameCardContainer}>
+        <Text style={titleText}>{card.term}</Text>
+        <Timer time={remainingTime} />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={onPressCorrect}
+          style={appButtonContainer}
+        >
+          <Text style={styles.appButtonText}>Correct</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={onPressPass}
+          style={appButtonContainer}
+        >
+          <Text style={appButtonText}>Pass</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  return deviceMotionActive
+    ? deviceMotionRender()
+    : nonDeviceMotionRender();
+};
+
+export default GameCard;

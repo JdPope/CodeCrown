@@ -1,39 +1,36 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Animated, View } from 'react-native';
 import { ScreenOrientation } from 'expo';
 import { styles } from '../styles/style';
 
-export default class Countdown extends Component {
-    state = {
-      countdownAnimation: new Animated.Value(450),
-    }
+const Countdown = ({ startTimer, remainingTime }) => {
+  const [countdownAnimation] = useState(new Animated.Value(450));
 
-    componentDidMount = () => {
-      ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
-      this.props.startTimer();
-      this.startAnimation();
-    }
+  const startAnimation = () => {
+    Animated.loop(
+      Animated.timing(countdownAnimation, {
+        toValue: 200,
+        duration: 1000,
+      }), { iterations: 3 },
+    ).start();
+  };
 
-    startAnimation = () => {
-      Animated.loop(
-        Animated.timing(this.state.countdownAnimation, {
-          toValue: 200,
-          duration: 1000,
-        }), { iterations: 3 },
-      ).start();
-    }
+  const animatedStyle = {
+    fontSize: countdownAnimation,
+  };
+  useEffect(() => {
+    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+    startTimer();
+    startAnimation();
+  }, []);
 
-    render() {
-      const animatedStyle = {
-        fontSize: this.state.countdownAnimation,
-      };
+  return (
+    <View style={styles.gameCardContainer}>
+      <Animated.Text style={[styles.countdownText, animatedStyle]}>
+        {remainingTime.toString().slice(-1)}
+      </Animated.Text>
+    </View>
+  );
+};
 
-      return (
-        <View style={styles.gameCardContainer}>
-          <Animated.Text style={[styles.countdownText, animatedStyle]}>
-            {this.props.remainingTime.toString().slice(-1)}
-          </Animated.Text>
-        </View>
-      );
-    }
-}
+export default Countdown;
