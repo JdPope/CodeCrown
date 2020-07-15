@@ -1,39 +1,37 @@
-import React, { Component } from 'react'
-import { View, Text, ScrollView } from 'react-native'
-import { TouchableOpacity} from 'react-native-gesture-handler'
-import { ScreenOrientation } from 'expo'
-import { styles }  from '../styles/style';
+import React, { Component } from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScreenOrientation } from 'expo';
+import { styles } from '../styles/style';
 
 export default class FinalScreen extends Component {
-
   componentDidMount = () => {
-    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT_UP)
+    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT_UP);
   }
 
-  getCorrectCards = () => {
-    return this.props.cards.filter(card => {
-      return card.isCorrect
-    })
-  }
+  getCorrectCards = () => this.props.cards.filter((card) => card.isCorrect)
 
   renderQuestions = () => {
-    const answeredCards = this.props.cards.filter(card => {
-      return card.isCorrect || card.isCorrect === false
-    })
-    return answeredCards.map(card => {
-      return card.isCorrect
-        ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
-        : <Text style={styles.passText} key={card.id}>{card.term}</Text>
-    })
+    const answeredCards = this.props.cards.filter((card) => card.isCorrect || card.isCorrect === false);
+    return answeredCards.map((card) => (card.isCorrect
+      ? <Text style={styles.correctText} key={card.id}>{card.term}</Text>
+      : <Text style={styles.passText} key={card.id}>{card.term}</Text>));
   }
 
   render() {
-    const { cardContainer, titleText, questionContainer, contentContainer, fullWidth } = styles
+    const {
+      cardContainer, titleText, questionContainer, contentContainer, fullWidth,
+    } = styles;
 
-    return ( 
+    return (
       <View style={cardContainer}>
-        <Text style={titleText}>You Got {this.getCorrectCards().length} right!</Text>
-        <ScrollView style={questionContainer} contentContainerStyle={{justifyContent: 'center'}}>
+        <Text style={titleText}>
+          You Got
+          {this.getCorrectCards().length}
+          {' '}
+          right!
+        </Text>
+        <ScrollView style={questionContainer} contentContainerStyle={{ justifyContent: 'center' }}>
           <View>
             {this.renderQuestions()}
           </View>
@@ -48,6 +46,6 @@ export default class FinalScreen extends Component {
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
 }

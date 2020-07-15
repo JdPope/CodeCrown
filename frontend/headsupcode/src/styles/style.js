@@ -1,12 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { colors } from './colors';
-// const { green, lightGreen, yellow, orange, red, white, black } = colors
-const { green, red, blue, white } = colors
+
+const {
+  green, red, blue, white,
+} = colors;
 
 export const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: blue[0]
+    backgroundColor: blue[0],
   },
   cardContainer: {
     flex: 1,
@@ -21,12 +23,12 @@ export const styles = StyleSheet.create({
   flipText: {
     fontSize: 120,
     fontWeight: 'bold',
-    color: blue[1]
+    color: blue[1],
   },
   titleText: {
     fontSize: 50,
     fontWeight: 'bold',
-    color: blue[1]
+    color: blue[1],
   },
   text: {
     fontSize: 25,
@@ -52,12 +54,12 @@ export const styles = StyleSheet.create({
     paddingLeft: 3,
     paddingRight: 3,
     shadowColor: blue[0],
-    shadowOffset: {width: 3, height: 3},
+    shadowOffset: { width: 3, height: 3 },
     shadowRadius: 1,
     shadowOpacity: 0.15,
   },
   questionContainer: {
-    flex:1,
+    flex: 1,
     width: '100%',
     padding: 20,
   },
@@ -68,13 +70,13 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: blue[1]
+    backgroundColor: blue[1],
   },
   timerStyle: {
     fontSize: 50,
     color: blue[1],
   },
-  gameCardContainer : {
+  gameCardContainer: {
     flex: 1,
     borderRadius: 50,
     borderWidth: 15,
@@ -85,7 +87,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     marginLeft: 40,
-    marginRight: 40
+    marginRight: 40,
   },
   countdownText: {
     fontWeight: 'bold',
@@ -101,7 +103,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 40,
-    marginRight: 40
+    marginRight: 40,
   },
   orange: {
     backgroundColor: red[2],
@@ -113,7 +115,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 40,
-    marginRight: 40
+    marginRight: 40,
   },
   correctText: {
     fontSize: 30,
@@ -135,18 +137,18 @@ export const styles = StyleSheet.create({
   appButtonText: {
     fontSize: 18,
     color: blue[0],
-    fontWeight: "bold",
-    alignSelf: "center",
-    textTransform: "uppercase"
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
   fullWidth: {
-    flex:1,
+    flex: 1,
     justifyContent: 'flex-end',
-    width: '100%'
+    width: '100%',
   },
   deckImage: {
     width: '100%',
     height: 160,
-    padding: 10
+    padding: 10,
   },
-})
+});
