@@ -15,15 +15,18 @@ const HomeScreen = ({ navigation }) => {
 
   const deckRender = navigation.state.params.decks.map((cardDeck) => <Deck deck={cardDeck} key={cardDeck.id} startGame={startGame} />);
 
-  const { background, cardContainer, titleText, scrollView, deckContainer } = styles
+
+  const {
+    background, cardContainer, titleText, scrollView, deckContainer,
+  } = styles;
 
   return (
+    <View style={background}>
 
-    <View style={styles.background}>
       <StatusBar hidden />
-      <SafeAreaView style={styles.cardContainer}>
-        <Text style={styles.titleText}>Code Crown</Text>
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.deckContainer}>
+      <SafeAreaView style={cardContainer}>
+        <Text style={titleText}>Code Crown</Text>
+        <ScrollView style={scrollView} contentContainerStyle={deckContainer}>
           {deckRender}
         </ScrollView>
       </SafeAreaView>
