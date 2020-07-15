@@ -7,6 +7,7 @@ import GameCard from '../components/GameCard';
 import FinalScreen from '../components/FinalScreen';
 
 export default class GameScreen extends Component {
+
     state = {
       remainingTime: 63,
       timer: null,
@@ -120,5 +121,16 @@ export default class GameScreen extends Component {
           {this.renderComponent()}
         </View>
       );
+
     }
+  } 
+
+  render() {
+    const { background } = styles
+    return (
+      <View style={background}>
+        {this.renderComponent()}
+      </View>
+    )
+  }
 }

@@ -15,7 +15,10 @@ const HomeScreen = ({ navigation }) => {
 
   const deckRender = navigation.state.params.decks.map((cardDeck) => <Deck deck={cardDeck} key={cardDeck.id} startGame={startGame} />);
 
+  const { background, cardContainer, titleText, scrollView, deckContainer } = styles
+
   return (
+
     <View style={styles.background}>
       <StatusBar hidden />
       <SafeAreaView style={styles.cardContainer}>

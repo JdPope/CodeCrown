@@ -4,10 +4,12 @@ import {
 } from 'react-native';
 import { styles } from '../styles/style';
 
+
 const LandingScreen = ({ navigation }) => {
   const URL = 'https://headsup-api.herokuapp.com/decks';
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     fetch(URL)
@@ -20,6 +22,7 @@ const LandingScreen = ({ navigation }) => {
         console.error(error);
       });
   }, []);
+
 
   return (loading
     ? (
