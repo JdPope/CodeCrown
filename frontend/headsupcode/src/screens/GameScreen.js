@@ -7,6 +7,7 @@ import GameCard from '../components/GameCard';
 import FinalScreen from '../components/FinalScreen';
 
 export default class GameScreen extends Component {
+
   state = {
     remainingTime: 63,
     timer: null,
@@ -58,6 +59,7 @@ export default class GameScreen extends Component {
       this.setState({ cardIndex: cardIndex + 1 });
     } else {
       this.setState({ remainingTime: 0 });
+
     }
   }
 
@@ -96,7 +98,9 @@ export default class GameScreen extends Component {
           handleUserResponse={handleUserResponse}
         />
       );
+
     }
+
     return (
       <FinalScreen
         returnHome={returnHome}
@@ -107,10 +111,13 @@ export default class GameScreen extends Component {
 
   render() {
     const { background } = styles;
+
     return (
       <View style={background}>
         {this.renderComponent()}
       </View>
+
     );
+
   }
 }
