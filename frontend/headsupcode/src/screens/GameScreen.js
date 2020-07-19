@@ -11,76 +11,64 @@ const GameScreen = (props) => {
   const [remainingTime, setRemainingTime] = useState(63)
   const [timer, setTimer] = useState(null)
   const [cardIndex, setCardIndex] = useState(0)
+  const [deviceMotionActive, setDeviceMotionActive] = useState(true)
+  const [cards, setCards] = UseState(props.navigation.state.params.deck.cards)
 
 
-  state = {
-    cards: this.props.navigation.state.params.deck.cards,
-    deviceMotionActive: true,
-  }
+  useEffect(() => {
+    checkDeviceMotion();
+    randomizeCards();
+  })
 
-  componentDidMount = () => {
-    this.checkDeviceMotion();
-    this.randomizeCards();
-  }
-
-  checkDeviceMotion = async () => {
+ const checkDeviceMotion = async () => {
     await DeviceMotion.isAvailableAsync()
-      ? this.setState({ deviceMotionActive: true })
-      : this.setState({ deviceMotionActive: false });
+      ? setDeviceMotionActive(true)
+      : setDeviceMotionActive(false)
   }
 
-  randomizeCards = () => {
-    const randomCards = this.state.cards
+ const randomizeCards = () => {
+    const randomCards = cards
       .map((card) => ({ sort: Math.random(), ...card }))
       .sort((a, b) => a.sort - b.sort);
 
-    this.setState({ cards: randomCards });
+    setCards(randomCards)
   }
 
-  startTimer = () => {
+  const startTimer = () => {
     setTimer(setInterval(decrementTimer, 1000));
   }
 
-  decrementTimer = () => {
+ const decrementTimer = () => {
     setRemainingTime(remainingTime - 1)
   }
 
-  clearTimer = () => {
-    clearInterval({timer});
+ const clearTimer = () => {
+    clearInterval(timer);
     setTimer(null);
   }
 
-  currentCard = () => {
-    const { cards} = this.state;
-    return cards[{cardIndex}];
+  const currentCard = () => {
+    return cards[cardIndex];
   }
 
-  nextCard = () => {
-    const { cards } = this.state;
-    if ({cardIndex }< (cards.length - 1)) {
-      setCardIndex( {cardIndex} + 1 );
+  const nextCard = () => {  
+    if (cardIndex < (cards.length - 1)) {
+      setCardIndex( cardIndex + 1 );
     } else {
       setRemainingTime(0)
-
     }
   }
 
-  handleUserResponse = (isCorrect) => {
-    const newCardsArray = this.state.cards;
-    newCardsArray[{cardIndex}].isCorrect = isCorrect;
-
-    this.setState({ cards: newCardsArray });
+  const handleUserResponse = (isCorrect) => {
+    const newCardsArray = cards
+    newCardsArray[cardIndex].isCorrect = isCorrect;
+    setCards(newCardsArray);
   }
 
-  returnHome = (event) => this.props.navigation.navigate('Home')
+ const returnHome = (event) => props.navigation.navigate('Home')
 
-  renderComponent = () => {
-    const {cards, deviceMotionActive } = this.state;
-    const {
-      startTimer, decrementTimer, clearTimer, currentCard, nextCard, handleUserResponse, returnHome,
-    } = this;
-
-    if ({remainingTime} > 60) {
+  const renderComponent = () => {
+    if (remainingTime > 60) {
       return (
         <Countdown
           startTimer={startTimer}
@@ -88,7 +76,7 @@ const GameScreen = (props) => {
           remainingTime={remainingTime}
         />
       );
-    } if ({remainingTime} > 0) {
+    } if (remainingTime > 0) {
       return (
         <GameCard
           remainingTime={remainingTime}
@@ -111,15 +99,12 @@ const GameScreen = (props) => {
     );
   }
 
-  render() {
     const { background } = styles;
-
     return (
       <View style={background}>
-        {this.renderComponent()}
+        {renderComponent()}
       </View>
 
     );
 
-  }
 }
