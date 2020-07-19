@@ -10,11 +10,10 @@ const GameScreen = (props) => {
 
   const [remainingTime, setRemainingTime] = useState(63)
   const [timer, setTimer] = useState(null)
+  const [cardIndex, setCardIndex] = useState(0)
 
 
   state = {
-    timer: null,
-    cardIndex: 0,
     cards: this.props.navigation.state.params.deck.cards,
     deviceMotionActive: true,
   }
@@ -52,14 +51,14 @@ const GameScreen = (props) => {
   }
 
   currentCard = () => {
-    const { cards, cardIndex } = this.state;
-    return cards[cardIndex];
+    const { cards} = this.state;
+    return cards[{cardIndex}];
   }
 
   nextCard = () => {
-    const { cards, cardIndex } = this.state;
-    if (cardIndex < (cards.length - 1)) {
-      this.setState({ cardIndex: cardIndex + 1 });
+    const { cards } = this.state;
+    if ({cardIndex }< (cards.length - 1)) {
+      setCardIndex( {cardIndex} + 1 );
     } else {
       setRemainingTime(0)
 
@@ -68,7 +67,7 @@ const GameScreen = (props) => {
 
   handleUserResponse = (isCorrect) => {
     const newCardsArray = this.state.cards;
-    newCardsArray[this.state.cardIndex].isCorrect = isCorrect;
+    newCardsArray[{cardIndex}].isCorrect = isCorrect;
 
     this.setState({ cards: newCardsArray });
   }
