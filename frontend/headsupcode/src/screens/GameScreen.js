@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { DeviceMotion } from 'expo-sensors';
 import { styles } from '../styles/style';
@@ -6,10 +6,13 @@ import Countdown from '../components/Countdown';
 import GameCard from '../components/GameCard';
 import FinalScreen from '../components/FinalScreen';
 
-export default class GameScreen extends Component {
+const GameScreen = (props) => {
+
+  const [remainingTime, setRemainingTime] = useState(63)
+  const [timer, setTimer] = useState(null)
+
 
   state = {
-    remainingTime: 63,
     timer: null,
     cardIndex: 0,
     cards: this.props.navigation.state.params.deck.cards,
@@ -36,16 +39,16 @@ export default class GameScreen extends Component {
   }
 
   startTimer = () => {
-    this.setState({ timer: setInterval(this.decrementTimer, 1000) });
+    setTimer(setInterval(decrementTimer, 1000));
   }
 
   decrementTimer = () => {
-    this.setState({ remainingTime: this.state.remainingTime - 1 });
+    setRemainingTime(remainingTime - 1)
   }
 
   clearTimer = () => {
-    clearInterval(this.state.timer);
-    this.setState({ timer: null });
+    clearInterval({timer});
+    setTimer(null);
   }
 
   currentCard = () => {
@@ -58,7 +61,7 @@ export default class GameScreen extends Component {
     if (cardIndex < (cards.length - 1)) {
       this.setState({ cardIndex: cardIndex + 1 });
     } else {
-      this.setState({ remainingTime: 0 });
+      setRemainingTime(0)
 
     }
   }
@@ -73,12 +76,12 @@ export default class GameScreen extends Component {
   returnHome = (event) => this.props.navigation.navigate('Home')
 
   renderComponent = () => {
-    const { remainingTime, cards, deviceMotionActive } = this.state;
+    const {cards, deviceMotionActive } = this.state;
     const {
       startTimer, decrementTimer, clearTimer, currentCard, nextCard, handleUserResponse, returnHome,
     } = this;
 
-    if (remainingTime > 60) {
+    if ({remainingTime} > 60) {
       return (
         <Countdown
           startTimer={startTimer}
@@ -86,7 +89,7 @@ export default class GameScreen extends Component {
           remainingTime={remainingTime}
         />
       );
-    } if (remainingTime > 0) {
+    } if ({remainingTime} > 0) {
       return (
         <GameCard
           remainingTime={remainingTime}
