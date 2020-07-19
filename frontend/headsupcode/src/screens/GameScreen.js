@@ -21,7 +21,6 @@ const GameScreen = (props) => {
 //     randomizeCards();
 //   })
 
-return <h1>GameScreen</h1>
 //  const checkDeviceMotion = async () => {
 //     await DeviceMotion.isAvailableAsync()
 //       ? setDeviceMotionActive(true)
@@ -36,18 +35,18 @@ return <h1>GameScreen</h1>
 //     setCards(randomCards)
 //   }
 
-//   const startTimer = () => {
-//     setTimer(setInterval(decrementTimer, 1000));
-//   }
+  const startTimer = () => {
+    setTimer({timer:setInterval(decrementTimer(), 1000)});
+  }
 
-//  const decrementTimer = () => {
-//     setRemainingTime(remainingTime - 1)
-//   }
+ function decrementTimer(){
+    setRemainingTime(remainingTime-1)
+  }
 
-//  const clearTimer = () => {
-//     clearInterval(timer);
-//     setTimer(null);
-//   }
+ const clearTimer = () => {
+    clearInterval(timer);
+    setTimer(null);
+  }
 
 //   const currentCard = () => {
 //     return cards[cardIndex];
@@ -69,44 +68,45 @@ return <h1>GameScreen</h1>
 
 //  const returnHome = (event) => props.navigation.navigate('Home')
 
-//   const renderComponent = () => {
-//     if (remainingTime > 60) {
-//       return (
-//         <Countdown
-//           startTimer={startTimer}
-//           decrementTimer={decrementTimer}
-//           remainingTime={remainingTime}
-//         />
-//       );
-//     } if (remainingTime > 0) {
-//       return (
-//         <GameCard
-//           remainingTime={remainingTime}
-//           decrementTimer={decrementTimer}
-//           clearTimer={clearTimer}
-//           card={currentCard()}
-//           nextCard={nextCard}
-//           deviceMotionActive={deviceMotionActive}
-//           handleUserResponse={handleUserResponse}
-//         />
-//       );
+  const renderComponent = () => {
+    if (remainingTime > 60) {
+      return (
+        <Countdown
+          startTimer={startTimer}
+          decrementTimer={decrementTimer}
+          remainingTime={remainingTime}
+        />
+      );
+    } if (remainingTime > 0) {
+      return (
+        <GameCard
+          remainingTime={remainingTime}
+          decrementTimer={decrementTimer}
+          clearTimer={clearTimer}
+          card={currentCard()}
+          nextCard={nextCard}
+          deviceMotionActive={deviceMotionActive}
+          handleUserResponse={handleUserResponse}
+        />
+      );
 
-//     }
+    }
 
-//     return (
-//       <FinalScreen
-//         returnHome={returnHome}
-//         cards={cards}
-//       />
-//     );
-//   }
+    return (
+      <h1>yo</h1>
+      // <FinalScreen
+      //   returnHome={returnHome}
+      //   cards={cards}
+      // />
+    );
+  }
 
-//     const { background } = styles;
-//     return (
-//       <View style={background}>
-//         {renderComponent()}
-//       </View>
+    const { background } = styles;
 
-//     );
+    return (
+      <View style={background}>
+        {renderComponent()}
+      </View>
+    );
 }
 export default GameScreen
