@@ -19,19 +19,19 @@ const GameScreen = (props) => {
   //   randomizeCards();
   // })
 
-//  const checkDeviceMotion = async () => {
-//     await DeviceMotion.isAvailableAsync()
-//       ? setDeviceMotionActive(true)
-//       : setDeviceMotionActive(false)
-//   }
+ const checkDeviceMotion = async () => {
+    await DeviceMotion.isAvailableAsync()
+      ? setDeviceMotionActive(true)
+      : setDeviceMotionActive(false)
+  }
 
-//  const randomizeCards = () => {
-//     const randomCards = cards
-//       .map((card) => ({ sort: Math.random(), ...card }))
-//       .sort((a, b) => a.sort - b.sort);
+ const randomizeCards = () => {
+    const randomCards = cards
+      .map((card) => ({ sort: Math.random(), ...card }))
+      .sort((a, b) => a.sort - b.sort);
 
-//     setCards(randomCards)
-//   }
+    setCards(randomCards)
+  }
 
 const [remainingTime, setRemainingTime] = useState(63);
 const [isActive, setIsActive] = useState(false);
@@ -46,7 +46,6 @@ function clearTimer() {
 }
 
 useEffect(() => {
-  console.log(remainingTime)
   let interval = null;
   if (isActive) {
     interval = setInterval(() => {
@@ -59,23 +58,23 @@ useEffect(() => {
 }, [isActive, remainingTime]);
 
 
-  // const currentCard = () => {
-  //   return cards[cardIndex];
-  // }
+  const currentCard = () => {
+    return cards[cardIndex];
+  }
 
-  // const nextCard = () => {  
-  //   if (cardIndex < (cards.length - 1)) {
-  //     setCardIndex( cardIndex + 1 );
-  //   } else {
-  //     setRemainingTime(0)
-  //   }
-  // }
+  const nextCard = () => {  
+    if (cardIndex < (cards.length - 1)) {
+      setCardIndex( cardIndex + 1 );
+    } else {
+      setRemainingTime(0)
+    }
+  }
 
-  // const handleUserResponse = (isCorrect) => {
-  //   const newCardsArray = cards
-  //   newCardsArray[cardIndex].isCorrect = isCorrect;
-  //   setCards(newCardsArray);
-  // }
+  const handleUserResponse = (isCorrect) => {
+    const newCardsArray = cards
+    newCardsArray[cardIndex].isCorrect = isCorrect;
+    setCards(newCardsArray);
+  }
 
 //  const returnHome = (event) => props.navigation.navigate('Home')
 
@@ -92,7 +91,6 @@ useEffect(() => {
       return (
         <GameCard
           remainingTime={remainingTime}
-          decrementTimer={decrementTimer}
           clearTimer={clearTimer}
           card={currentCard()}
           nextCard={nextCard}
