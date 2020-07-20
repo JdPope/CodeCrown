@@ -10,14 +10,22 @@ const GameScreen = (props) => {
   const [cardIndex, setCardIndex] = useState(0)
   const [deviceMotionActive, setDeviceMotionActive] = useState(true)
   const [cards, setCards] = useState(props.navigation.state.params.deck.cards)
+  const [remainingTime, setRemainingTime] = useState(63);
+  const [isActive, setIsActive] = useState(false);
 
-
-//the interval is not getting access to the changes...
-
-  // useEffect(() => {
-  //   checkDeviceMotion();
-  //   randomizeCards();
-  // })
+  useEffect(() => {
+    checkDeviceMotion();
+    randomizeCards();
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setRemainingTime(remainingTime => remainingTime - 1);
+      }, 1000);
+    } else if (!isActive && remainingTime !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, remainingTime]);
 
  const checkDeviceMotion = async () => {
     await DeviceMotion.isAvailableAsync()
@@ -33,30 +41,14 @@ const GameScreen = (props) => {
     setCards(randomCards)
   }
 
-const [remainingTime, setRemainingTime] = useState(63);
-const [isActive, setIsActive] = useState(false);
-
-function toggle() {
-  setIsActive(!isActive);
-}
-
-function clearTimer() {
-  setRemainingTime(63);
-  setIsActive(false);
-}
-
-useEffect(() => {
-  let interval = null;
-  if (isActive) {
-    interval = setInterval(() => {
-      setRemainingTime(remainingTime => remainingTime - 1);
-    }, 1000);
-  } else if (!isActive && remainingTime !== 0) {
-    clearInterval(interval);
+  const toggle = () => {
+    setIsActive(!isActive);
   }
-  return () => clearInterval(interval);
-}, [isActive, remainingTime]);
 
+  const clearTimer = () =>{
+    setRemainingTime(63);
+    setIsActive(false);
+  }
 
   const currentCard = () => {
     return cards[cardIndex];
@@ -76,7 +68,7 @@ useEffect(() => {
     setCards(newCardsArray);
   }
 
-//  const returnHome = (event) => props.navigation.navigate('Home')
+ const returnHome = (event) => props.navigation.navigate('Home')
 
   const renderComponent = () => {
     if (remainingTime > 60) {
@@ -100,11 +92,10 @@ useEffect(() => {
       );
     }
       return (
-        <h1>yo</h1>
-        // <FinalScreen
-        //   returnHome={returnHome}
-        //   cards={cards}
-        // />
+        <FinalScreen
+          returnHome={returnHome}
+          cards={cards}
+        />
       );
   }  
   
