@@ -6,7 +6,8 @@ import { styles } from '../styles/style';
 const Deck = ({ startGame, deck }) => (
   <View style={styles.deck}>
     <Text style={[styles.text, styles.padding]}>{deck.title}</Text>
-    <Image style={styles.deckImage} source={{ uri: deck.img }} />
+    <Image style={styles.deckImage} source={require('./icon.png')} />
+    {/* <Image style={styles.deckImage} source={{ uri: deck.img }} /> */}
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => startGame(deck)}
