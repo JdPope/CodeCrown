@@ -46,7 +46,7 @@ const GameScreen = (props) => {
   }
 
   const clearTimer = () =>{
-    setRemainingTime(63);
+    setRemainingTime(0);
     setIsActive(false);
   }
 
@@ -58,7 +58,9 @@ const GameScreen = (props) => {
     if (cardIndex < (cards.length - 1)) {
       setCardIndex( cardIndex + 1 );
     } else {
-      setRemainingTime(0)
+      return (
+        setRemainingTime(0)
+      )
     }
   }
 

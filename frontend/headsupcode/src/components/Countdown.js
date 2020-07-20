@@ -4,7 +4,6 @@ import { ScreenOrientation } from 'expo';
 import { styles } from '../styles/style';
 
 const Countdown = ({ toggle, remainingTime }) => {
-  console.log('remaining time', remainingTime)
   const [countdownAnimation] = useState(new Animated.Value(450));
 
   const startAnimation = () => {
@@ -26,7 +25,6 @@ const Countdown = ({ toggle, remainingTime }) => {
   }, []);
 
   return (
-    console.log(remainingTime, 'rem'),
     <View style={styles.gameCardContainer}>
       <Animated.Text style={[styles.countdownText, animatedStyle]}>
         {remainingTime.toString().slice(-1)}
