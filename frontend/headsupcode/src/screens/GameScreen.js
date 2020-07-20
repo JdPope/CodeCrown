@@ -7,9 +7,6 @@ import GameCard from '../components/GameCard';
 import FinalScreen from '../components/FinalScreen';
 
 const GameScreen = (props) => {
-  
-  const [remainingTime, setRemainingTime] = useState(63)
-  const [timer, setTimer] = useState(null)
   const [cardIndex, setCardIndex] = useState(0)
   const [deviceMotionActive, setDeviceMotionActive] = useState(true)
   const [cards, setCards] = useState(props.navigation.state.params.deck.cards)
@@ -36,21 +33,31 @@ const GameScreen = (props) => {
 //     setCards(randomCards)
 //   }
 
-  let counter = 1
-  const startTimer = () => { 
-    setTimer(setInterval(decrementTimer, 1000));
-  }
+const [remainingTime, setRemainingTime] = useState(63);
+const [isActive, setIsActive] = useState(false);
 
-  function decrementTimer(){
-    console.log(remainingTime - counter++)
-    setRemainingTime(remainingTime - 1)
-    console.log(counter)
-   }
+function toggle() {
+  setIsActive(!isActive);
+}
 
- const clearTimer = () => {
-    clearInterval(timer);
-    setTimer(null);
+function clearTimer() {
+  setRemainingTime(63);
+  setIsActive(false);
+}
+
+useEffect(() => {
+  console.log(remainingTime)
+  let interval = null;
+  if (isActive) {
+    interval = setInterval(() => {
+      setRemainingTime(remainingTime => remainingTime - 1);
+    }, 1000);
+  } else if (!isActive && remainingTime !== 0) {
+    clearInterval(interval);
   }
+  return () => clearInterval(interval);
+}, [isActive, remainingTime]);
+
 
   // const currentCard = () => {
   //   return cards[cardIndex];
@@ -64,27 +71,23 @@ const GameScreen = (props) => {
   //   }
   // }
 
-  const handleUserResponse = (isCorrect) => {
-    const newCardsArray = cards
-    newCardsArray[cardIndex].isCorrect = isCorrect;
-    setCards(newCardsArray);
-  }
+  // const handleUserResponse = (isCorrect) => {
+  //   const newCardsArray = cards
+  //   newCardsArray[cardIndex].isCorrect = isCorrect;
+  //   setCards(newCardsArray);
+  // }
 
 //  const returnHome = (event) => props.navigation.navigate('Home')
 
   const renderComponent = () => {
     if (remainingTime > 60) {
       return (
-        <>
-        <div>{remainingTime}</div>
-        <Button title='button' onPress={()=> startTimer()}/>
-        </>
-        /* // <Countdown
-        //   startTimer={startTimer}
-        //   decrementTimer={decrementTimer}
-        //   remainingTime={remainingTime} 
-        // /> */
+        <Countdown
+          toggle={toggle}
+          remainingTime={remainingTime} 
+        /> 
       );
+    }
     if (remainingTime > 0) {
       return (
         <GameCard
@@ -105,8 +108,8 @@ const GameScreen = (props) => {
         //   cards={cards}
         // />
       );
-    }  
-  }
+  }  
+  
 
     const { background } = styles;
 

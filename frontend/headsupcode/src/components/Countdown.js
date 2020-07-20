@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, View } from 'react-native';
+import { Animated, View, TouchableHighlightBase } from 'react-native';
 import { ScreenOrientation } from 'expo';
 import { styles } from '../styles/style';
 
-const Countdown = ({ startTimer, remainingTime }) => {
+const Countdown = ({ toggle, remainingTime }) => {
   console.log('remaining time', remainingTime)
   const [countdownAnimation] = useState(new Animated.Value(450));
 
@@ -21,7 +21,7 @@ const Countdown = ({ startTimer, remainingTime }) => {
   };
   useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
-    startTimer();
+    toggle();
     startAnimation();
   }, []);
 
