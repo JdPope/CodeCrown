@@ -20,10 +20,12 @@ const LandingScreen = ({ navigation }) => {
       })
       .catch((error) => {
         console.error(error);
-      });
-  }, []);
+      })
+  }, [])
+  
 
   const { background, cardContainer } = styles;
+
 
   return (
     loading
@@ -35,7 +37,8 @@ const LandingScreen = ({ navigation }) => {
           </View>
         </View>
       )
-      : navigation.navigate('Home', { decks })
+      : navigation.navigate('Home', { decks }) 
+      
   );
 };
 
