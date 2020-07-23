@@ -4,12 +4,16 @@ import {
 } from 'react-native';
 import { styles } from '../styles/style';
 
-
 const LandingScreen = ({ navigation }) => {
   const URL = 'https://headsup-api.herokuapp.com/decks';
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigateToHome = () => {
+    if (!loading) {
+      navigation.navigate('Home', { decks });
+    }
+  };
 
   useEffect(() => {
     fetch(URL)
@@ -20,25 +24,19 @@ const LandingScreen = ({ navigation }) => {
       })
       .catch((error) => {
         console.error(error);
-      })
-  }, [])
-  
+      });
+    navigateToHome();
+  });
 
   const { background, cardContainer } = styles;
 
-
   return (
-    loading
-      ? (
-        <View style={background}>
-          <StatusBar hidden />
-          <View style={cardContainer}>
-            <ActivityIndicator size="large" />
-          </View>
-        </View>
-      )
-      : navigation.navigate('Home', { decks }) 
-      
+    <View style={background}>
+      <StatusBar hidden />
+      <View style={cardContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    </View>
   );
 };
 
