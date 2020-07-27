@@ -26,7 +26,7 @@ const LandingScreen = ({ navigation }) => {
         console.error(error);
       });
     navigateToHome();
-  });
+  }, [loading]);
 
   const { background, cardContainer } = styles;
 
