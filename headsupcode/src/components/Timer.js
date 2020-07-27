@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const Timer = ({ time }) => {
   const { timerStyle } = styles;

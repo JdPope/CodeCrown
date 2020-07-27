@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, View, TouchableHighlightBase } from 'react-native';
+import { Animated, View } from 'react-native';
 import { ScreenOrientation } from 'expo';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const Countdown = ({ toggle, remainingTime }) => {
   const [countdownAnimation] = useState(new Animated.Value(450));
@@ -11,7 +11,7 @@ const Countdown = ({ toggle, remainingTime }) => {
       Animated.timing(countdownAnimation, {
         toValue: 200,
         duration: 1000,
-      }), { iterations: 3},
+      }), { iterations: 3 },
     ).start();
   };
 

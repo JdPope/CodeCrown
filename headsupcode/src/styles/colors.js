@@ -1,4 +1,4 @@
-export const colors = {
+const colors = {
   white: 'hsl(0, 0%, 95%)',
   black: 'hsl(0, 95%, 5%)',
   green: {
@@ -39,3 +39,5 @@ export const colors = {
     8: 'hsla(195, 2%, 97%, 1.0)',
   },
 };
+
+export default colors;
