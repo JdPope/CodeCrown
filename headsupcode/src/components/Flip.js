@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const Flip = ({ unsetFlip, isCorrect }) => {
   useEffect(() => {

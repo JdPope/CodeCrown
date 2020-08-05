@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View, StatusBar, ActivityIndicator,
 } from 'react-native';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const LandingScreen = ({ navigation }) => {
   const URL = 'https://headsup-api.herokuapp.com/decks';

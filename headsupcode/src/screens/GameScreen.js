@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button } from 'react-native';
 import { DeviceMotion } from 'expo-sensors';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 import Countdown from '../components/Countdown';
 import GameCard from '../components/GameCard';
 import FinalScreen from '../components/FinalScreen';
 
 const GameScreen = (props) => {
-  const [cardIndex, setCardIndex] = useState(0)
-  const [deviceMotionActive, setDeviceMotionActive] = useState(true)
-  const [cards, setCards] = useState(props.navigation.state.params.deck.cards)
+  const [cardIndex, setCardIndex] = useState(0);
+  const [deviceMotionActive, setDeviceMotionActive] = useState(true);
+  const [cards, setCards] = useState(props.navigation.state.params.deck.cards);
   const [remainingTime, setRemainingTime] = useState(63);
   const [isActive, setIsActive] = useState(false);
 
@@ -19,7 +19,7 @@ const GameScreen = (props) => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setRemainingTime(remainingTime => remainingTime - 1);
+        setRemainingTime((remainingTime) => remainingTime - 1);
       }, 1000);
     } else if (!isActive && remainingTime !== 0) {
       clearInterval(interval);
@@ -27,58 +27,56 @@ const GameScreen = (props) => {
     return () => clearInterval(interval);
   }, [isActive, remainingTime]);
 
- const checkDeviceMotion = async () => {
+  const checkDeviceMotion = async () => {
     await DeviceMotion.isAvailableAsync()
       ? setDeviceMotionActive(true)
-      : setDeviceMotionActive(false)
-  }
+      : setDeviceMotionActive(false);
+  };
 
- const randomizeCards = () => {
+  const randomizeCards = () => {
     const randomCards = cards
       .map((card) => ({ sort: Math.random(), ...card }))
       .sort((a, b) => a.sort - b.sort);
 
-    setCards(randomCards)
-  }
+    setCards(randomCards);
+  };
 
   const toggle = () => {
     setIsActive(!isActive);
-  }
+  };
 
-  const clearTimer = () =>{
+  const clearTimer = () => {
     setRemainingTime(0);
     setIsActive(false);
-  }
+  };
 
-  const currentCard = () => {
-    return cards[cardIndex];
-  }
+  const currentCard = () => cards[cardIndex];
 
-  const nextCard = () => {  
+  const nextCard = () => {
     if (cardIndex < (cards.length - 1)) {
-      setCardIndex( cardIndex + 1 );
+      setCardIndex(cardIndex + 1);
     } else {
       return (
         setRemainingTime(0)
-      )
+      );
     }
-  }
+  };
 
   const handleUserResponse = (isCorrect) => {
-    const newCardsArray = cards
+    const newCardsArray = cards;
     newCardsArray[cardIndex].isCorrect = isCorrect;
     setCards(newCardsArray);
-  }
+  };
 
- const returnHome = (event) => props.navigation.navigate('Home')
+  const returnHome = (event) => props.navigation.navigate('Home');
 
   const renderComponent = () => {
     if (remainingTime > 60) {
       return (
         <Countdown
           toggle={toggle}
-          remainingTime={remainingTime} 
-        /> 
+          remainingTime={remainingTime}
+        />
       );
     }
     if (remainingTime > 0) {
@@ -93,21 +91,20 @@ const GameScreen = (props) => {
         />
       );
     }
-      return (
-        <FinalScreen
-          returnHome={returnHome}
-          cards={cards}
-        />
-      );
-  }  
-  
-
-    const { background } = styles;
-
     return (
-      <View style={background}>
-        {renderComponent()}
-      </View>
+      <FinalScreen
+        returnHome={returnHome}
+        cards={cards}
+      />
     );
-}
-export default GameScreen
+  };
+
+  const { background } = styles;
+
+  return (
+    <View style={background}>
+      {renderComponent()}
+    </View>
+  );
+};
+export default GameScreen;

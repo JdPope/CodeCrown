@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ScreenOrientation } from 'expo';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const FinalScreen = ({ cards, returnHome }) => {
   useEffect(() => {

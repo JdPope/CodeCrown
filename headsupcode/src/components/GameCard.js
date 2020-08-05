@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ScreenOrientation } from 'expo';
 import { DeviceMotion } from 'expo-sensors';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 import Timer from './Timer';
 import Flip from './Flip';
 

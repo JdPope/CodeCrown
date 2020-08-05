@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const Deck = ({ startGame, deck }) => (
   <View style={styles.deck}>

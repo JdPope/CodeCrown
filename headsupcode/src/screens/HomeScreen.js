@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ScreenOrientation } from 'expo';
 import Deck from '../components/Deck';
-import { styles } from '../styles/style';
+import styles from '../styles/style';
 
 const HomeScreen = ({ navigation }) => {
   useEffect(() => {
@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation }) => {
   const startGame = (deck) => navigation.navigate('Game', { deck });
 
   const deckRender = navigation.state.params.decks.map((cardDeck) => <Deck deck={cardDeck} key={cardDeck.id} startGame={startGame} />);
-
 
   const {
     background, cardContainer, titleText, scrollView, deckContainer,

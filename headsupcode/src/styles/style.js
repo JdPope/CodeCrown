@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { colors } from './colors';
+import colors from './colors';
 
-const {
-  green, red, blue, white,
-} = colors;
+const { green, red, blue } = colors;
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: blue[0],
@@ -142,7 +140,6 @@ export const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   fullWidth: {
-    flex: 1,
     justifyContent: 'flex-end',
     width: '100%',
   },
@@ -152,3 +149,5 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+export default styles;
